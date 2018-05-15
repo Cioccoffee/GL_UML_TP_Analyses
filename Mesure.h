@@ -35,7 +35,7 @@ public:
 
 	Mesure(const Mesure &uneMesure);
 
-	operator ==(const Mesure& m1, const Mesure& m2);
+	bool operator ==(const Mesure& m1, const Mesure& m2)  const;
 
 	bool estSimilaire(Empreinte &maladie)
 	// Mode d'emploi :
