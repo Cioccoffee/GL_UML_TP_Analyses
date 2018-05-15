@@ -3,6 +3,8 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <map>
+#include <set>
 
 //------------------------------------------------------ Include personnel
 #include "Empreinte.h"
@@ -26,6 +28,11 @@ Empreinte(const Empreinte &uneEmpreinte)
 
 }
 
+void ajouterMesure(Mesure)
+{
+
+}
+
 operator ==(const Empreinte& m1, const Empreinte& m2)
 {
 
@@ -36,6 +43,10 @@ bool estSimilaire(Empreinte &maladie)
 
 }
 
+set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies)
+{
+
+}
 string toString()
 {
 	string s = "Empreinte : "+ id +" :\n";

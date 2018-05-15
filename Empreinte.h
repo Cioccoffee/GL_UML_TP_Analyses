@@ -5,6 +5,8 @@
 //#include "Trajet.h"
 //#include "TrajetSimple.h"
 using namespace std;
+#include <map>
+#include <set>
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
@@ -35,14 +37,18 @@ public:
 
 	Empreinte(const Empreinte &uneEmpreinte);
 
+	void ajouterMesure(Mesure);
+
 	operator ==(const Empreinte& m1, const Empreinte& m2);
 
-	bool estSimilaire(Empreinte &maladie)
+	bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :
 	//
 	// Contrat :
 	//
 	//
+
+	set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
 
 	string toString();
 	// Mode d'emploi :
