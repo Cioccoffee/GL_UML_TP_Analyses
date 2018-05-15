@@ -1,11 +1,11 @@
-//---------- Réalisation de la classe <Mesure> (fichier Mesure.cpp) ------------
+//---------- Réalisation de la classe <Empreinte> (fichier Empreinte.cpp) ------------
 //---------------------------------------------------------------- INCLUDE
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "Mesure.h"
+#include "Empreinte.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -14,19 +14,19 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
-Mesure(string nom, string type, string valeur)
+Empreinte(string nom, string type, string valeur)
 {
 	this.nom = nom;
 	this.type = type;
 	this.valeur = valeur;
 }
 
-Mesure(const Mesure &uneMesure)
+Empreinte(const Empreinte &uneEmpreinte)
 {
 
 }
 
-operator ==(const Mesure& m1, const Mesure& m2)
+operator ==(const Empreinte& m1, const Empreinte& m2)
 {
 
 }
@@ -38,28 +38,30 @@ bool estSimilaire(Empreinte &maladie)
 
 string toString()
 {
-	return "Mesure : "+ nom +" est un "+type+" de valeur "+valeur+"\n";
+	string s = "Empreinte : "+ id +" :\n";
+	const_iterator it;
+	for(it = mesures.cbegin(); it!= mesures.cend(); ++it){
+		s+=it->second.toString();
+	}
+	return "Empreinte : "+ id +" :\n";
 }
 
 
-string Nom()
+int Id()
 {
-
+	return id;
 }
 
 
-string Type(){
+/*map<string,Mesure>* Mesures(){
+	return *mesures;
+}*/
 
+Mesure* getMesure(string nomMesure){
+	return *mesures.find(nomMesure);
 }
 
-
-string Valeur()
-{
-
-}
-
-
-virtual ~Mesure()
+virtual ~Empreinte()
 {
 
 }

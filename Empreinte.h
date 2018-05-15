@@ -1,10 +1,10 @@
 
-//---------- Interface de la classe <Mesure> (fichier Mesure.h) ----------------
-#if ! defined ( Mesure_H )
-#define Mesure_H
+//---------- Interface de la classe <Empreinte> (fichier Empreinte.h) ----------------
+#if ! defined ( Empreinte_H )
+#define Empreinte_H
 //#include "Trajet.h"
 //#include "TrajetSimple.h"
-
+using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
@@ -13,10 +13,10 @@
 
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Mesure>
+// Rôle de la classe <Empreinte>
 //------------------------------------------------------------------------
 
-class Mesure {
+class Empreinte {
 //----------------------------------------------------------------- PUBLIC
 
 public:
@@ -27,15 +27,15 @@ public:
 	// Contrat :
 	//
 
-	Mesure(string nom, string type, string valeur);
+	Empreinte(string nom, string type, string valeur);
 	// Mode d'emploi :
 	// crée la tete de la liste et l'initialise (le dernier élement pointe vers la tete)
 	// Contrat :
 	//
 
-	Mesure(const Mesure &uneMesure);
+	Empreinte(const Empreinte &uneEmpreinte);
 
-	operator ==(const Mesure& m1, const Mesure& m2);
+	operator ==(const Empreinte& m1, const Empreinte& m2);
 
 	bool estSimilaire(Empreinte &maladie)
 	// Mode d'emploi :
@@ -51,28 +51,27 @@ public:
 	//
 	//
 
-	string Nom();
+	int Id();
 	// Mode d'emploi :
-	// retourne le nom
+	// retourne l'id
 	// Contrat :
 	//
 	//
 
-	string Type();
+	//map<string,Mesure>* Mesures();
 	// Mode d'emploi :
 	// retourne le type
 	// Contrat :
 	//
 	//
 
-	string Valeur();
+	Mesure* getMesure(string nomMesure)
 	// Mode d'emploi :
-	// retourne le valeur
+	// retourne la mesure correspondant au nom demand�
 	// Contrat :
 	//
 	//
-
-	virtual ~Mesure();
+	virtual ~Empreinte();
 	// Mode d'emploi :
 	// détruit tous les éléments de la liste
 	// Contrat :
@@ -85,12 +84,11 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 
-	string nom;
-	string type;
-	string valeur;
+	int id;
+	map<string,Mesure> mesures;
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <Mesure>
+//-------------------------------- Autres définitions dépendantes de <Empreinte>
 
-#endif // Mesure_H
+#endif // Empreinte_H
