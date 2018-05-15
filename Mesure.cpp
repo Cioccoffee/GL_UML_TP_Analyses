@@ -26,6 +26,11 @@ Mesure(const Mesure &uneMesure)
 
 }
 
+operator ==(const Mesure& m1, const Mesure& m2)
+{
+
+}
+
 bool estSimilaire(Empreinte &maladie)
 {
 
@@ -33,7 +38,7 @@ bool estSimilaire(Empreinte &maladie)
 
 string toString()
 {
-
+	return "Mesure : "+ nom +" est un "+type+" de valeur "+valeur+"\n";
 }
 
 
