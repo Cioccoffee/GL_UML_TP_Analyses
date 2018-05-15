@@ -39,7 +39,7 @@ public:
 
 	void ajouterMesure(Mesure);
 
-	operator ==(const Empreinte& m1, const Empreinte& m2);
+	bool operator ==(const Empreinte& m1, const Empreinte& m2);
 
 	bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :

@@ -33,9 +33,13 @@ void ajouterMesure(Mesure)
 
 }
 
-operator ==(const Empreinte& m1, const Empreinte& m2)
+bool operator ==(const Empreinte& m1, const Empreinte& m2)
 {
-
+	//for empreinte 1 -> legnth de mesures
+	// si mesure existe dans empreinte 2
+	// on cherche égalité/similarité
+	// if not on return false
+	// if on arrive à la fin de la boucle, return true
 }
 
 bool estSimilaire(Empreinte &maladie)
