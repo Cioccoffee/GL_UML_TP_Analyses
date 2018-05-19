@@ -14,24 +14,24 @@ using namespace std;
 //----------------------------------------------------- MÃ©thodes publiques
 //
 
-EmpreinteMaladie(int id):Empreinte(int id)
+EmpreinteMaladie::EmpreinteMaladie(int id):Empreinte(int id)
 {
 
 }
 
-EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie)
+EmpreinteMaladie::EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie)
 {
 
 }
 
-void ajouterMaladie(string maladie){
+void EmpreinteMaladie::ajouterMaladie(string maladie){
 	this.maladies->push_back(*maladie);
 }
 
 
 /*operator ==(const EmpreinteMaladie& m1, const EmpreinteMaladie& m2)
 {
-	//appelle le parent -> supprimer la méthode
+	//appelle le parent -> supprimer la mï¿½thode
 }
 
 bool estSimilaire(Empreinte &maladie)
@@ -39,19 +39,19 @@ bool estSimilaire(Empreinte &maladie)
 	//appelle le parent
 }*/
 
-string toString() //appeler le parent + ajouter liste de maladies
+string EmpreinteMaladie::toString() //appeler le parent + ajouter liste de maladies
 {
 
 	return "EmpreinteMaladie : "+ nom +" est un "+type+" de valeur "+valeur+"\n";
 }
 
 
-list<string> *  Maladies(){
+list<string> *  EmpreinteMaladie::Maladies(){
 
 }
 
 
-virtual ~EmpreinteMaladie()
+virtual EmpreinteMaladie::~EmpreinteMaladie()
 {
 
 }

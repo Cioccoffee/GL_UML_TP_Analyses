@@ -7,6 +7,8 @@
 using namespace std;
 #include <map>
 #include <set>
+#include "Mesure.h"
+#include "EmpreinteMaladie.h"
 //--------------------------------------------------- Interfaces utilisÃ©es
 
 //------------------------------------------------------------- Constantes
@@ -37,9 +39,9 @@ public:
 
 	Empreinte(const Empreinte &uneEmpreinte);
 
-	void ajouterMesure(Mesure);
+	void ajouterMesure(Mesure m);
 
-	bool operator ==(const Empreinte& m1, const Empreinte& m2);
+	bool operator ==(const Empreinte& m1/*, const Empreinte& m2*/);
 
 	bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :
@@ -71,9 +73,9 @@ public:
 	//
 	//
 
-	Mesure* getMesure(string nomMesure)
+	Mesure* getMesure(string nomMesure);
 	// Mode d'emploi :
-	// retourne la mesure correspondant au nom demandé
+	// retourne la mesure correspondant au nom demandï¿½
 	// Contrat :
 	//
 	//

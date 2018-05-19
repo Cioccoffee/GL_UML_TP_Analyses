@@ -14,21 +14,21 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
-Mesure(string nom, string type, string valeur)
+Mesure::Mesure(string nom, string type, string valeur)
 {
 	this.nom = nom;
 	this.type = type;
 	this.valeur = valeur;
 }
 
-Mesure(const Mesure &uneMesure)
+Mesure::Mesure(const Mesure &uneMesure)
 {
 	this.nom = uneMesure.nom;
 	this.type = uneMesure.type;
 	this.valeur = uneMesure.valeur;
 }
 
-bool operator ==(const Mesure& m1, const Mesure& m2)
+bool Mesure::operator ==(const Mesure& m1/*, const Mesure& m2*/)
 {
 	if(m1.nom == m2.nom & m1.type == m2.type)
 	{
@@ -39,35 +39,35 @@ bool operator ==(const Mesure& m1, const Mesure& m2)
 	return false;
 }
 
-bool estSimilaire(Empreinte &maladie)
+bool Mesure::estSimilaire(Mesure &m)
 {
-	return this == maladie;
+	return this == m;
 }
 
-string toString()
+string Mesure::toString()
 {
 	return "Mesure : "+ nom +" est un "+type+" de valeur "+valeur+"\n";
 }
 
 
-string Nom()
+string Mesure::Nom()
 {
 	return nom;
 }
 
 
-string Type(){
+string Mesure::Type(){
 	return type;
 }
 
 
-string Valeur()
+string Mesure::Valeur()
 {
 	return valeur;
 }
 
 
-virtual ~Mesure()
+virtual Mesure::~Mesure()
 {
 
 }

@@ -5,6 +5,7 @@ using namespace std;
 #include <iostream>
 #include <map>
 #include <set>
+#include <iterator>
 
 //------------------------------------------------------ Include personnel
 #include "Empreinte.h"
@@ -16,51 +17,51 @@ using namespace std;
 //----------------------------------------------------- MÃ©thodes publiques
 //
 
-Empreinte(int id)
+Empreinte::Empreinte(int id)
 {
-	this.id = id;
+	this->id = id;
 }
 
-Empreinte(const Empreinte &uneEmpreinte)
+Empreinte::Empreinte(const Empreinte &uneEmpreinte)
 {
-	//compléter ?
+	//complï¿½ter ?
 }
 
-void ajouterMesure(Mesure m)
+void Empreinte::ajouterMesure(Mesure m)
 {
-	this.mesures->insert(new std::make_pair(m.Nom(),m));
+	this->mesures->insert(new std::make_pair(m.Nom(),m));
 }
 
-bool operator ==(const Empreinte& m1, const Empreinte& m2)
+bool Empreinte::operator ==(const Empreinte& m1/*, const Empreinte& m2*/)
 {
 	//for empreinte 1 -> legnth de mesures
 	// si mesure existe dans empreinte 2
-	// on cherche égalité/similarité
+	// on cherche ï¿½galitï¿½/similaritï¿½
 	// if not on return false
-	// if on arrive à la fin de la boucle, return true
+	// if on arrive ï¿½ la fin de la boucle, return true
 }
 
-bool estSimilaire(Empreinte &maladie)
+bool Empreinte::estSimilaire(Empreinte &maladie)
 {
-	return this == maladie;
+	return *this == maladie;
 }
 
-set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies)
+/*set<string> Empreinte::analyser(map<int,EmpreinteMaladie> & catalogueMaladies)
 {
 
-}
-string toString()
+}*/
+string Empreinte::toString()
 {
-	string s = "Empreinte : "+ id +" :\n";
+	string s = "Empreinte : "+ *id +" :\n";
 	const_iterator it;
 	for(it = mesures.cbegin(); it!= mesures.cend(); ++it){
 		s+=it->second.toString();
 	}
-	return "Empreinte : "+ id +" :\n";
+	return "Empreinte : "+ *id +" :\n";
 }
 
 
-int Id()
+int Empreinte::Id()
 {
 	return id;
 }
@@ -70,11 +71,11 @@ int Id()
 	return *mesures;
 }*/
 
-Mesure* getMesure(string nomMesure){
+Mesure* Empreinte::getMesure(string nomMesure){
 	return *mesures.find(nomMesure);
 }
 
-virtual ~Empreinte()
+virtual Empreinte::~Empreinte()
 {
 
 }

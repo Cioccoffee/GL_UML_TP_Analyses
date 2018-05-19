@@ -2,7 +2,8 @@
 //---------- Interface de la classe <EmpreinteMaladie> (fichier EmpreinteMaladie.h) ----------------
 #if ! defined ( EmpreinteMaladie_H )
 #define EmpreinteMaladie_H
-//#include "Trajet.h"
+#include "Empreinte.h"
+#include <list>
 //#include "TrajetSimple.h"
 
 //--------------------------------------------------- Interfaces utilisées
@@ -16,7 +17,7 @@
 // Rôle de la classe <EmpreinteMaladie>
 //------------------------------------------------------------------------
 
-class EmpreinteMaladie : public Empreinte{
+class EmpreinteMaladie: public Empreinte{
 //----------------------------------------------------------------- PUBLIC
 
 public:
@@ -37,7 +38,7 @@ public:
 
 	void ajouterMaladie(string maladie);
 
-	operator ==(const EmpreinteMaladie& m1, const EmpreinteMaladie& m2);
+	bool operator ==(const EmpreinteMaladie& m1/*, const EmpreinteMaladie& m2*/);
 
 	bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :

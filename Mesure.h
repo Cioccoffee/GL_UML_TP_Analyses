@@ -2,7 +2,7 @@
 //---------- Interface de la classe <Mesure> (fichier Mesure.h) ----------------
 #if ! defined ( Mesure_H )
 #define Mesure_H
-//#include "Trajet.h"
+//#include "Empreinte.h"
 //#include "TrajetSimple.h"
 
 //--------------------------------------------------- Interfaces utilisées
@@ -35,9 +35,9 @@ public:
 
 	Mesure(const Mesure &uneMesure);
 
-	bool operator ==(const Mesure& m1, const Mesure& m2)  const;
+	bool operator ==(const Mesure& m1/*, const Mesure& m2*/)  const;
 
-	bool estSimilaire(Empreinte &maladie)
+	bool estSimilaire(Mesure &m);
 	// Mode d'emploi :
 	//
 	// Contrat :
