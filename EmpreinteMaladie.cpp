@@ -1,11 +1,11 @@
-//---------- Réalisation de la classe <Mesure> (fichier Mesure.cpp) ------------
+//---------- Réalisation de la classe <EmpreinteMaladie> (fichier EmpreinteMaladie.cpp) ------------
 //---------------------------------------------------------------- INCLUDE
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "Mesure.h"
+#include "EmpreinteMaladie.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -14,52 +14,44 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
-Mesure(string nom, string type, string valeur)
-{
-	this.nom = nom;
-	this.type = type;
-	this.valeur = valeur;
-}
-
-Mesure(const Mesure &uneMesure)
+EmpreinteMaladie(int id):Empreinte(int id)
 {
 
 }
 
-operator ==(const Mesure& m1, const Mesure& m2)
+EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie)
 {
 
+}
+
+void ajouterMaladie(string maladie){
+	this.maladies->push_back(*maladie);
+}
+
+
+/*operator ==(const EmpreinteMaladie& m1, const EmpreinteMaladie& m2)
+{
+	//appelle le parent -> supprimer la m�thode
 }
 
 bool estSimilaire(Empreinte &maladie)
 {
+	//appelle le parent
+}*/
 
-}
-
-string toString()
-{
-	return "Mesure : "+ nom +" est un "+type+" de valeur "+valeur+"\n";
-}
-
-
-string Nom()
+string toString() //appeler le parent + ajouter liste de maladies
 {
 
+	return "EmpreinteMaladie : "+ nom +" est un "+type+" de valeur "+valeur+"\n";
 }
 
 
-string Type(){
-
-}
-
-
-string Valeur()
-{
+list<string> *  Maladies(){
 
 }
 
 
-virtual ~Mesure()
+virtual ~EmpreinteMaladie()
 {
 
 }

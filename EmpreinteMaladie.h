@@ -1,7 +1,7 @@
 
-//---------- Interface de la classe <Mesure> (fichier Mesure.h) ----------------
-#if ! defined ( Mesure_H )
-#define Mesure_H
+//---------- Interface de la classe <EmpreinteMaladie> (fichier EmpreinteMaladie.h) ----------------
+#if ! defined ( EmpreinteMaladie_H )
+#define EmpreinteMaladie_H
 //#include "Trajet.h"
 //#include "TrajetSimple.h"
 
@@ -13,10 +13,10 @@
 
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Mesure>
+// Rôle de la classe <EmpreinteMaladie>
 //------------------------------------------------------------------------
 
-class Mesure {
+class EmpreinteMaladie : public Empreinte{
 //----------------------------------------------------------------- PUBLIC
 
 public:
@@ -27,17 +27,19 @@ public:
 	// Contrat :
 	//
 
-	Mesure(string nom, string type, string valeur);
+	EmpreinteMaladie(int id);
 	// Mode d'emploi :
 	// crée la tete de la liste et l'initialise (le dernier élement pointe vers la tete)
 	// Contrat :
 	//
 
-	Mesure(const Mesure &uneMesure);
+	EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie);
 
-	operator ==(const Mesure& m1, const Mesure& m2);
+	void ajouterMaladie(string maladie);
 
-	bool estSimilaire(Empreinte &maladie)
+	operator ==(const EmpreinteMaladie& m1, const EmpreinteMaladie& m2);
+
+	bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :
 	//
 	// Contrat :
@@ -58,21 +60,15 @@ public:
 	//
 	//
 
-	string Type();
+	list<string>* Maladies();
 	// Mode d'emploi :
 	// retourne le type
 	// Contrat :
 	//
 	//
 
-	string Valeur();
-	// Mode d'emploi :
-	// retourne le valeur
-	// Contrat :
-	//
-	//
 
-	virtual ~Mesure();
+	virtual ~EmpreinteMaladie();
 	// Mode d'emploi :
 	// détruit tous les éléments de la liste
 	// Contrat :
@@ -85,12 +81,10 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 
-	string nom;
-	string type;
-	string valeur;
+	list<string> * maladies;
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <Mesure>
+//-------------------------------- Autres définitions dépendantes de <EmpreinteMaladie>
 
-#endif // Mesure_H
+#endif // EmpreinteMaladie_H

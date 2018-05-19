@@ -29,9 +29,9 @@ public:
 	// Contrat :
 	//
 
-	Empreinte(string nom, string type, string valeur);
+	Empreinte(int id);
 	// Mode d'emploi :
-	// crée la tete de la liste et l'initialise (le dernier élement pointe vers la tete)
+	//
 	// Contrat :
 	//
 
@@ -91,7 +91,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 	int id;
-	map<string,Mesure> mesures;
+	map<string,Mesure> * mesures;
 
 };
 

@@ -16,21 +16,19 @@ using namespace std;
 //----------------------------------------------------- MÃ©thodes publiques
 //
 
-Empreinte(string nom, string type, string valeur)
+Empreinte(int id)
 {
-	this.nom = nom;
-	this.type = type;
-	this.valeur = valeur;
+	this.id = id;
 }
 
 Empreinte(const Empreinte &uneEmpreinte)
 {
-
+	//compléter ?
 }
 
-void ajouterMesure(Mesure)
+void ajouterMesure(Mesure m)
 {
-
+	this.mesures->insert(new std::make_pair(m.Nom(),m));
 }
 
 bool operator ==(const Empreinte& m1, const Empreinte& m2)
@@ -44,7 +42,7 @@ bool operator ==(const Empreinte& m1, const Empreinte& m2)
 
 bool estSimilaire(Empreinte &maladie)
 {
-
+	return this == maladie;
 }
 
 set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies)
