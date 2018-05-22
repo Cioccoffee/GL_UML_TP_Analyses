@@ -39,27 +39,27 @@ public:
 
 	Empreinte(const Empreinte &uneEmpreinte);
 
-	void ajouterMesure(Mesure m);
+	virtual void ajouterMesure(Mesure m);
 
-	bool operator ==(const Empreinte& m1/*, const Empreinte& m2*/);
+	virtual bool operator ==(const Empreinte& m1);
 
-	bool estSimilaire(Empreinte &maladie);
+	virtual bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :
 	//
 	// Contrat :
 	//
 	//
 
-	set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
+	virtual set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
 
-	string toString();
+	virtual string toString();
 	// Mode d'emploi :
 	//
 	// Contrat :
 	//
 	//
 
-	int Id();
+	virtual int Id();
 	// Mode d'emploi :
 	// retourne l'id
 	// Contrat :
@@ -73,7 +73,7 @@ public:
 	//
 	//
 
-	Mesure* getMesure(string nomMesure);
+	virtual Mesure* getMesure(string nomMesure);
 	// Mode d'emploi :
 	// retourne la mesure correspondant au nom demand�
 	// Contrat :
