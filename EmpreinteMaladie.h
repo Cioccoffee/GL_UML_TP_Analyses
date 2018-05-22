@@ -34,7 +34,7 @@ public:
 	// Contrat :
 	//
 
-	EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie);
+	//EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie);
 
 	void ajouterMaladie(string maladie);
 

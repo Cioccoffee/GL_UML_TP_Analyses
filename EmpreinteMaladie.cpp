@@ -6,7 +6,7 @@ using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "EmpreinteMaladie.h"
-
+#include "Empreinte.h"
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -14,18 +14,18 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
-EmpreinteMaladie::EmpreinteMaladie(int id):Empreinte(int id)
+EmpreinteMaladie::EmpreinteMaladie(int id):Empreinte(id)
 {
 
 }
 
-EmpreinteMaladie::EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie)
-{
-
-}
+//EmpreinteMaladie::EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie)
+//{
+//
+//}
 
 void EmpreinteMaladie::ajouterMaladie(string maladie){
-	this.maladies->push_back(*maladie);
+	this->maladies->push_back(maladie);
 }
 
 
@@ -41,13 +41,17 @@ bool estSimilaire(Empreinte &maladie)
 
 string EmpreinteMaladie::toString() //appeler le parent + ajouter liste de maladies
 {
+	string s = "";
+		s+="EmpreinteMaladie : ";
+		s+=this->id;
+		s+="\n";
 
-	return "EmpreinteMaladie : "+ nom +" est un "+type+" de valeur "+valeur+"\n";
+		return s;
 }
 
 
 list<string> *  EmpreinteMaladie::Maladies(){
-
+	return this->maladies;
 }
 
 

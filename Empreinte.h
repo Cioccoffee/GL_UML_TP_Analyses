@@ -8,7 +8,7 @@ using namespace std;
 #include <map>
 #include <set>
 #include "Mesure.h"
-#include "EmpreinteMaladie.h"
+//#include "EmpreinteMaladie.h"
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
@@ -50,7 +50,7 @@ public:
 	//
 	//
 
-	virtual set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
+	//virtual set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
 
 	virtual string toString();
 	// Mode d'emploi :
@@ -73,7 +73,7 @@ public:
 	//
 	//
 
-	virtual Mesure* getMesure(string nomMesure);
+	virtual Mesure getMesure(string nomMesure);
 	// Mode d'emploi :
 	// retourne la mesure correspondant au nom demand�
 	// Contrat :

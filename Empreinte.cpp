@@ -70,31 +70,31 @@ int Empreinte::Id()
 	return id;
 }
 
-set<string> Empreinte::analyser(map<int,EmpreinteMaladie> & catalogueMaladies)
-{
-    set<string> infections;
-    infections.insert("");
-//    for(map<int,EmpreinteMaladie>::iterator it=catalogueMaladies.begin() ; it!=catalogueMaladies.end() ; ++it)
-//    {
-//        bool test = false;
-//        test = this->estSimilaire(it->second);
-//        if (test)
-//        {
-//            for (list<string>::iterator jt = it->maladies.begin(); jt!=it->maladies.end(); ++jt)
-//            {
-//                infections.insert(*jt)
-//            }
-//        }
-//    }
-    return infections;
-}
+//set<string> Empreinte::analyser(map<int,EmpreinteMaladie> & catalogueMaladies)
+//{
+//    set<string> infections;
+//    infections.insert("");
+////    for(map<int,EmpreinteMaladie>::iterator it=catalogueMaladies.begin() ; it!=catalogueMaladies.end() ; ++it)
+////    {
+////        bool test = false;
+////        test = this->estSimilaire(it->second);
+////        if (test)
+////        {
+////            for (list<string>::iterator jt = it->maladies.begin(); jt!=it->maladies.end(); ++jt)
+////            {
+////                infections.insert(*jt)
+////            }
+////        }
+////    }
+//    return infections;
+//}
 
 /*map<string,Mesure>* Mesures(){
 	return *mesures;
 }*/
 
-Mesure* Empreinte::getMesure(string nomMesure){
-	return *mesures.find(nomMesure);
+Mesure Empreinte::getMesure(string nomMesure){
+	return ((*mesures->find(nomMesure)).second);
 }
 
 Empreinte::~Empreinte()
