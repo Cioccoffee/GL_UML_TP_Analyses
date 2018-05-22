@@ -38,7 +38,7 @@ public:
 
 	void ajouterMaladie(string maladie);
 
-	bool operator ==(const EmpreinteMaladie& m1/*, const EmpreinteMaladie& m2*/);
+	bool operator ==(const Empreinte& m1);
 
 	bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :
