@@ -51,7 +51,7 @@ list<string> *  EmpreinteMaladie::Maladies(){
 }
 
 
-virtual EmpreinteMaladie::~EmpreinteMaladie()
+EmpreinteMaladie::~EmpreinteMaladie()
 {
 
 }
