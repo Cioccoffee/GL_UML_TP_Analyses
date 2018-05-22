@@ -67,7 +67,7 @@ string Mesure::Valeur()
 }
 
 
-virtual Mesure::~Mesure()
+Mesure::~Mesure()
 {
 
 }
