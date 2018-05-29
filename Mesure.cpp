@@ -36,7 +36,7 @@ bool Mesure::operator ==(const Mesure& m1) const {
 		if (this->type == "boolean") {
 
 		} else if (this->type == "string") {
-			return this->valeur.compare(m1.valeur);
+			return this->valeur==(m1.valeur);
 
 		} else {
 			if (this->type == "double") {
