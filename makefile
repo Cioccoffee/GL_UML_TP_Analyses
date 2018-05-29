@@ -8,7 +8,7 @@ EDL = g++
 INT = Empreinte.h EmpreinteMaladie.h Mesure.h 
 
 REAL=$(INT:.h=.cpp)
-OBJ=$(REAL:.cpp=.o)
+OBJ=$(REAL:.cpp=.o) main.o 
 
 EXE = executable
 
@@ -33,7 +33,7 @@ $(EXE) : $(OBJ)
 
 
 # Compilation of main
-#main.o : Mesure.h Empreinte.h EmpreinteMaladie.h 
+main.o : Mesure.h Empreinte.h EmpreinteMaladie.h 
 
 # Compilation of Mesure
 Mesure.o : Mesure.cpp Mesure.h

@@ -50,8 +50,6 @@ public:
 	//
 	//
 
-	//virtual set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
-
 	virtual string toString();
 	// Mode d'emploi :
 	//

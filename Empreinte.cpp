@@ -40,6 +40,19 @@ bool Empreinte::operator ==(const Empreinte& m1)
 	// on cherche �galit�/similarit�
 	// if not on return false
 	// if on arrive � la fin de la boucle, return true
+	for(map<string,Mesure>::iterator it=m1.mesures->begin() ; it!=m1.mesures->end() ; ++it)
+	    {
+			map<string,Mesure>::iterator jt = (this->mesures)->find(it->first);
+			//Mesure m = ((this->mesures)->find(it->first))->second;
+
+	        if (jt != (this->mesures)->end())
+	        {
+	            if(it->second.estSimilaire(jt->second)==false)
+	            return false;
+	        }
+	        else
+	            return false;
+	    }
 	return true;
 }
 
@@ -70,24 +83,6 @@ int Empreinte::Id()
 	return id;
 }
 
-//set<string> Empreinte::analyser(map<int,EmpreinteMaladie> & catalogueMaladies)
-//{
-//    set<string> infections;
-//    infections.insert("");
-////    for(map<int,EmpreinteMaladie>::iterator it=catalogueMaladies.begin() ; it!=catalogueMaladies.end() ; ++it)
-////    {
-////        bool test = false;
-////        test = this->estSimilaire(it->second);
-////        if (test)
-////        {
-////            for (list<string>::iterator jt = it->maladies.begin(); jt!=it->maladies.end(); ++jt)
-////            {
-////                infections.insert(*jt)
-////            }
-////        }
-////    }
-//    return infections;
-//}
 
 /*map<string,Mesure>* Mesures(){
 	return *mesures;
