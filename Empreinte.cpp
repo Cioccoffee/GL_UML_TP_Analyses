@@ -99,7 +99,7 @@ Mesure Empreinte::getMesure(string nomMesure){
 
 Empreinte::~Empreinte()
 {
-
+	delete mesures;
 }
 //------------------------------------------------------------------ PRIVE
 

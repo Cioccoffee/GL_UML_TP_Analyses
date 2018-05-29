@@ -1,9 +1,10 @@
 //---------- Réalisation de la classe <Mesure> (fichier Mesure.cpp) ------------
 //---------------------------------------------------------------- INCLUDE
 //-------------------------------------------------------- Include système
-using namespace std;
-#include <iostream>
 
+#include <iostream>
+#include <string>
+using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Mesure.h"
 
@@ -37,11 +38,11 @@ bool Mesure::operator ==(const Mesure& m1) const {
 
 		} else {
 			if (this->type == "double") {
-				double val1 = stod(this->valeur);
+				double val1 = std::stod(this->valeur);
 				double val2 = stod(m1.valeur);
 				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
 			} else if (this->type == "int") {
-				int val1 = stoi(this->valeur);
+				int val1 = atoi((this->valeur).c_str());//stoi(this->valeur);
 				int val2 = stoi(m1.valeur);
 				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
 			} else if (this->type == "float") {

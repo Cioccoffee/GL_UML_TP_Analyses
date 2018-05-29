@@ -16,7 +16,7 @@ using namespace std;
 
 EmpreinteMaladie::EmpreinteMaladie(int id):Empreinte(id)
 {
-
+	//maladies = new list<string>();
 }
 
 //EmpreinteMaladie::EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie)
@@ -57,7 +57,10 @@ list<string> *  EmpreinteMaladie::Maladies(){
 
 EmpreinteMaladie::~EmpreinteMaladie()
 {
-
+	//mesures.clear();
+	delete mesures;
+	maladies->clear();
+	delete maladies;
 }
 //------------------------------------------------------------------ PRIVE
 

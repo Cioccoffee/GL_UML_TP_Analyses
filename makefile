@@ -26,14 +26,14 @@ $(EXE) : $(OBJ)
 	$(EDL) -o $(EXE) $(OBJ)
 
 #pattern pour la reliure
-%.o:%.cpp
-	$(COMP) -g $(COMPFLAGS) -c $<
+#%.o:%.cpp
+#	$(COMP) -g $(COMPFLAGS) -c $<
 
 # Explicit compilation rules
 
 
 # Compilation of main
-main.o : Mesure.h Empreinte.h EmpreinteMaladie.h 
+#main.o : Mesure.h Empreinte.h EmpreinteMaladie.h 
 
 # Compilation of Mesure
 Mesure.o : Mesure.cpp Mesure.h
@@ -42,14 +42,14 @@ Mesure.o : Mesure.cpp Mesure.h
 Empreinte.o : Empreinte.cpp Empreinte.h Mesure.h
 
 # Compilation of EmpreinteMaladie
-EmpreinteMaladie.o : EmpreinteMaladie.cpp EmpreinteMaladie.h Empreinte.h Mesure.h
+#EmpreinteMaladie.o : EmpreinteMaladie.cpp EmpreinteMaladie.h Empreinte.h Mesure.h
 
 # Compilation of Maladie
-#Maladie.o : Maladie.cpp Maladie.h Empreinte.h Catalogue.h
+Maladie.o : Maladie.cpp Maladie.h Empreinte.h Catalogue.h
 
 # Compilation of ChargerFichier
 #FileParser.o : FileParser.cpp FileParser.h Attribut.h Empreinte.h \
-Catalogue.h Maladie.h
+#Catalogue.h Maladie.h
 
 
 # ------ end of Explicit compilation rules

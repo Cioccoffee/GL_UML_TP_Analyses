@@ -36,32 +36,32 @@ public:
 
 	//EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie);
 
-	void ajouterMaladie(string maladie);
+	virtual void ajouterMaladie(string maladie);
 
-	bool operator ==(const Empreinte& m1);
+	//virtual bool operator ==(const Empreinte& m1);
 
-	bool estSimilaire(Empreinte &maladie);
+	//virtual bool estSimilaire(Empreinte &maladie);
 	// Mode d'emploi :
 	//
 	// Contrat :
 	//
 	//
 
-	string toString();
+	virtual string toString();
 	// Mode d'emploi :
 	//
 	// Contrat :
 	//
 	//
 
-	string Nom();
+	//virtual string Nom();
 	// Mode d'emploi :
 	// retourne le nom
 	// Contrat :
 	//
 	//
 
-	list<string>* Maladies();
+	virtual list<string>* Maladies();
 	// Mode d'emploi :
 	// retourne le type
 	// Contrat :

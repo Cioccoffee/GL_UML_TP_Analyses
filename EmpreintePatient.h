@@ -71,7 +71,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 
-	list<string> * maladies;
+	//list<string> * maladies;
 
 };
 
