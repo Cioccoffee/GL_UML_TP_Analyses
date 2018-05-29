@@ -2,6 +2,10 @@
 //---------- Interface de la classe <Mesure> (fichier Mesure.h) ----------------
 #if ! defined ( Mesure_H )
 #define Mesure_H
+#include <iostream>
+#include <string>
+#include <cstdlib>
+using namespace std;
 //#include "Empreinte.h"
 //#include "TrajetSimple.h"
 

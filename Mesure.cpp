@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
+//#include <stdlib.h>
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Mesure.h"
@@ -38,16 +40,23 @@ bool Mesure::operator ==(const Mesure& m1) const {
 
 		} else {
 			if (this->type == "double") {
-				double val1 = std::stod(this->valeur);
-				double val2 = stod(m1.valeur);
+				//string s1(this->valeur);
+				//double val1 = stod(s1);
+				double val1 = std::atof((this->valeur).c_str());
+				//double val1 = std::stod(this->valeur);
+				//double val2 = stod(m1.valeur);
+				double val2 = std::atof((m1.valeur).c_str());
 				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
 			} else if (this->type == "int") {
-				int val1 = atoi((this->valeur).c_str());//stoi(this->valeur);
-				int val2 = stoi(m1.valeur);
+				int val1 = std::atoi((this->valeur).c_str());//stoi(this->valeur);
+
+				int val2 = std::atoi((m1.valeur).c_str()); //int val2 = std::stoi(m1.valeur);
 				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
 			} else if (this->type == "float") {
-				float val1 = stoi(this->valeur);
-				float val2 = stoi(m1.valeur);
+				float val1 = std::atof((this->valeur).c_str());
+				//float val1 = stoi(this->valeur);
+				float val2 = std::atof((m1.valeur).c_str());
+				//float val2 = stoi(m1.valeur);
 				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
 			}
 
