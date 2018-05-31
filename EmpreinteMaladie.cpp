@@ -3,6 +3,8 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <list>
+#include <iterator>
 
 //------------------------------------------------------ Include personnel
 #include "EmpreinteMaladie.h"
@@ -14,9 +16,9 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
-EmpreinteMaladie::EmpreinteMaladie(int id):Empreinte(id)
-{
-	//maladies = new list<string>();
+EmpreinteMaladie::EmpreinteMaladie(int id) :
+		Empreinte(id) {
+	maladies = new list<string>();
 }
 
 //EmpreinteMaladie::EmpreinteMaladie(const EmpreinteMaladie &uneEmpreinteMaladie)
@@ -24,39 +26,43 @@ EmpreinteMaladie::EmpreinteMaladie(int id):Empreinte(id)
 //
 //}
 
-void EmpreinteMaladie::ajouterMaladie(string maladie){
+void EmpreinteMaladie::ajouterMaladie(string maladie) {
 	this->maladies->push_back(maladie);
 }
 
-
 /*operator ==(const EmpreinteMaladie& m1, const EmpreinteMaladie& m2)
-{
-	//appelle le parent -> supprimer la m�thode
-}
+ {
+ //appelle le parent -> supprimer la m�thode
+ }
 
-bool estSimilaire(Empreinte &maladie)
-{
-	//appelle le parent
-}*/
+ bool estSimilaire(Empreinte &maladie)
+ {
+ //appelle le parent
+ }*/
 
 string EmpreinteMaladie::toString() //appeler le parent + ajouter liste de maladies
 {
 	string s = "";
-		s+="EmpreinteMaladie : ";
-		s+=this->id;
-		s+="\n";
+	s += "EmpreinteMaladie : \n";
+	s+=Empreinte::toString();
+	s+="\n";
+	s+="Liste des maladies liées à cette empreinte :\n";
+	list<string>::iterator it;
+	for(it = maladies->begin(); it != maladies->end(); ++it){
+		s+="- ";
+	    s+=(*it);
+	    s+="\n";
+	}
+	s += "\n";
 
-		return s;
+	return s;
 }
 
-
-list<string> *  EmpreinteMaladie::Maladies(){
+list<string> * EmpreinteMaladie::Maladies() {
 	return this->maladies;
 }
 
-
-EmpreinteMaladie::~EmpreinteMaladie()
-{
+EmpreinteMaladie::~EmpreinteMaladie() {
 	//mesures.clear();
 	delete mesures;
 	maladies->clear();

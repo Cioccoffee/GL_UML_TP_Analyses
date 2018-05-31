@@ -33,10 +33,10 @@ bool Mesure::operator ==(const Mesure& m1) const {
 
 	if (this->nom == m1.nom && this->type == m1.type) {
 
-		if (this->type == "boolean") {
+		/*if (this->type == "bool") {
 
-		} else if (this->type == "string") {
-			return this->valeur==(m1.valeur);
+		 } else */if (this->type == "string" || this->type == "bool") {
+			return this->valeur == (m1.valeur);
 
 		} else {
 			if (this->type == "double") {
@@ -46,20 +46,22 @@ bool Mesure::operator ==(const Mesure& m1) const {
 				//double val1 = std::stod(this->valeur);
 				//double val2 = stod(m1.valeur);
 				double val2 = std::atof((m1.valeur).c_str());
-				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
+				if ((0.95 * val2 <= val1) && (val1 <= val2))
+					return true;
 			} else if (this->type == "int") {
 				int val1 = std::atoi((this->valeur).c_str());//stoi(this->valeur);
 
 				int val2 = std::atoi((m1.valeur).c_str()); //int val2 = std::stoi(m1.valeur);
-				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
+				if ((0.95 * val2 <= val1) && (val1 <= val2))
+					return true;
 			} else if (this->type == "float") {
 				float val1 = std::atof((this->valeur).c_str());
 				//float val1 = stoi(this->valeur);
 				float val2 = std::atof((m1.valeur).c_str());
 				//float val2 = stoi(m1.valeur);
-				if((0.95*val2 <= val1) && (val1 <= val2)) return true;
+				if ((0.95 * val2 <= val1) && (val1 <= val2))
+					return true;
 			}
-
 
 		}
 
@@ -84,23 +86,23 @@ bool Mesure::operator ==(const Mesure& m1) const {
 }
 
 bool Mesure::estSimilaire(const Mesure &m) {
-	return this->operator == (m);
+	return this->operator ==(m);
 }
 
 string Mesure::toString() {
-return "Mesure : " + nom + " est un " + type + " de valeur " + valeur + "\n";
+	return "Mesure : " + nom + " est un " + type + " de valeur " + valeur + "\n";
 }
 
 string Mesure::Nom() {
-return nom;
+	return nom;
 }
 
 string Mesure::Type() {
-return type;
+	return type;
 }
 
 string Mesure::Valeur() {
-return valeur;
+	return valeur;
 }
 
 Mesure::~Mesure() {

@@ -7,6 +7,7 @@ using namespace std;
 #include <set>
 #include <iterator>
 #include <algorithm>
+#include <sstream>
 
 //------------------------------------------------------ Include personnel
 #include "Empreinte.h"
@@ -21,6 +22,7 @@ using namespace std;
 Empreinte::Empreinte(int id)
 {
 	this->id = id;
+	mesures = new map<string,Mesure>();
 }
 
 Empreinte::Empreinte(const Empreinte &uneEmpreinte)
@@ -65,10 +67,17 @@ bool Empreinte::estSimilaire(Empreinte &maladie)
 {
 
 }*/
+string IntToString (int i)
+{
+    ostringstream temp;
+    temp<<i;
+    return temp.str();
+}
+
 string Empreinte::toString()
 {
-	string s = "Empreinte : ";
-	s+= id ;
+	string s = "Empreinte ";
+	s+= IntToString(id) ;
 	s+=" :\n";
 	map<string,Mesure>::iterator it;
 	for(it = mesures->begin(); it!= mesures->end(); ++it){
@@ -76,7 +85,6 @@ string Empreinte::toString()
 	}
 	return s; //"Empreinte : "+ *id +" :\n";
 }
-
 
 int Empreinte::Id()
 {
