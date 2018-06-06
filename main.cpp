@@ -431,9 +431,13 @@ void TestEmpreintePatient() {
 //	catalogueMaladies[0]=e4;
 //	catalogueMaladies[1]=e5;
 //	catalogueMaladies[2]=e6;
-	catalogueMaladies.insert(std::make_pair(0,e4));
-	catalogueMaladies.insert(std::make_pair(1,e5));
-	catalogueMaladies.insert(std::make_pair(2,e6));
+//	catalogueMaladies.insert(std::make_pair(0,e4));
+//	catalogueMaladies.insert(std::make_pair(1,e5));
+//	catalogueMaladies.insert(std::make_pair(2,e6));
+
+	catalogueMaladies.insert(pair<int,EmpreinteMaladie>(0, e4));
+	catalogueMaladies.insert(pair<int,EmpreinteMaladie>(1, e5));
+	catalogueMaladies.insert(pair<int,EmpreinteMaladie>(2, e6));
 
 	set<string> infections1 = e.analyser(catalogueMaladies);
 	set<string> infections2 = e2.analyser(catalogueMaladies);
