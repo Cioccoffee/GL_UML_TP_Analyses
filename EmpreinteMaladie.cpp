@@ -16,8 +16,11 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
-EmpreinteMaladie::EmpreinteMaladie(int id) :
-		Empreinte(id) {
+EmpreinteMaladie::EmpreinteMaladie() : Empreinte() {
+
+}
+
+EmpreinteMaladie::EmpreinteMaladie(int id) : Empreinte(id) {
 	maladies = new list<string>();
 }
 
@@ -44,7 +47,7 @@ string EmpreinteMaladie::toString() //appeler le parent + ajouter liste de malad
 {
 	string s = "";
 	s += "EmpreinteMaladie : \n";
-	s+=Empreinte::toString();
+	s+=this->Empreinte::toString();
 	s+="\n";
 	s+="Liste des maladies liées à cette empreinte :\n";
 	list<string>::iterator it;
@@ -63,9 +66,7 @@ list<string> * EmpreinteMaladie::Maladies() {
 }
 
 EmpreinteMaladie::~EmpreinteMaladie() {
-	//mesures.clear();
-	delete mesures;
-	maladies->clear();
+	//maladies->clear();
 	delete maladies;
 }
 //------------------------------------------------------------------ PRIVE

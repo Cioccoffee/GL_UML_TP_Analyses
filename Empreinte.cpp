@@ -19,6 +19,11 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
+Empreinte::Empreinte(){
+
+}
+
+
 Empreinte::Empreinte(int id)
 {
 	this->id = id;
@@ -102,6 +107,7 @@ Mesure Empreinte::getMesure(string nomMesure){
 
 Empreinte::~Empreinte()
 {
+	//mesures->clear();
 	delete mesures;
 }
 //------------------------------------------------------------------ PRIVE

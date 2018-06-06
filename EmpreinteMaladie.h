@@ -27,6 +27,7 @@ public:
 	//
 	// Contrat :
 	//
+	EmpreinteMaladie();
 
 	EmpreinteMaladie(int id);
 	// Mode d'emploi :

@@ -37,16 +37,6 @@ public:
 
 	//EmpreintePatient(const EmpreintePatient &uneEmpreintePatient);
 
-
-	bool operator ==(const Empreinte& m1);
-
-	bool estSimilaire(Empreinte &maladie);
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
-	//
-
 	set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
 
 	string toString();

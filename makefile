@@ -5,7 +5,7 @@ RM = rm
 COMP = g++
 EDL = g++
 
-INT = Empreinte.h EmpreinteMaladie.h Mesure.h 
+INT = Empreinte.h EmpreinteMaladie.h Mesure.h EmpreintePatient.h
 
 REAL=$(INT:.h=.cpp)
 OBJ=$(REAL:.cpp=.o) main.o 
@@ -33,7 +33,7 @@ $(EXE) : $(OBJ)
 
 
 # Compilation of main
-main.o : Mesure.h Empreinte.h EmpreinteMaladie.h 
+main.o : Mesure.h Empreinte.h EmpreinteMaladie.h  EmpreintePatient.h
 
 # Compilation of Mesure
 Mesure.o : Mesure.cpp Mesure.h
@@ -42,10 +42,13 @@ Mesure.o : Mesure.cpp Mesure.h
 Empreinte.o : Empreinte.cpp Empreinte.h Mesure.h
 
 # Compilation of EmpreinteMaladie
-#EmpreinteMaladie.o : EmpreinteMaladie.cpp EmpreinteMaladie.h Empreinte.h Mesure.h
+EmpreinteMaladie.o : EmpreinteMaladie.cpp EmpreinteMaladie.h Empreinte.h Mesure.h
+
+# Compilation of EmpreinteMaladie
+EmpreintePatient.o : EmpreintePatient.h EmpreinteMaladie.cpp EmpreinteMaladie.h Empreinte.h Mesure.h
 
 # Compilation of Maladie
-Maladie.o : Maladie.cpp Maladie.h Empreinte.h Catalogue.h
+#Maladie.o : Maladie.cpp Maladie.h Empreinte.h Catalogue.h
 
 # Compilation of ChargerFichier
 #FileParser.o : FileParser.cpp FileParser.h Attribut.h Empreinte.h \

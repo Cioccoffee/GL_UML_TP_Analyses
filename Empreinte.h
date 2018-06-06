@@ -31,6 +31,8 @@ public:
 	// Contrat :
 	//
 
+	Empreinte(); //utile pour la créationde map d'Empreintes
+
 	Empreinte(int id);
 	// Mode d'emploi :
 	//

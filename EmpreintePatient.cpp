@@ -35,34 +35,37 @@ bool estSimilaire(Empreinte &maladie)
 	//appelle le parent
 }*/
 
-set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies){
+set<string> EmpreintePatient::analyser(map<int,EmpreinteMaladie> & catalogueMaladies){
 	//set<string> infections;
 	//infections.insert("");
 
 	set<string> infections;
-
+	int i = 1;
+	cout <<i << endl;
 	    for(map<int,EmpreinteMaladie>::iterator it=catalogueMaladies.begin() ; it!=catalogueMaladies.end() ; ++it)
 	    {
+	    	cout << i <<endl;
 	        bool test = false;
-	        test = this->estSimilaire(it->second);
+	        test = this->Empreinte::estSimilaire(it->second);
 	        if (test)
 	        {
-	            for (list<string>::iterator jt = it->maladies.begin(); jt!=it->maladies.end(); ++jt)
+	            for (list<string>::iterator jt = (it->second).Maladies()->begin(); jt!=(it->second).Maladies()->end(); ++jt)
 	            {
 	                infections.insert(*jt);
 	            }
 	        }
+	        i++;
 	    }
 	    return infections;
 
 
 	///return infections;
 }
-string EmpreintePatient::toString() //appeler le parent + ajouter liste de maladies
+string EmpreintePatient::toString() //appeler le parent
 {
 	string s = "";
-	s+="EmpreintePatient : ";
-	s+=this->id;
+	s+="EmpreintePatient : \n";
+	s+=this->Empreinte::toString();
 	s+="\n";
 
 	return s;
