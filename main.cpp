@@ -631,11 +631,12 @@ static void Menu()
 							keepOn = false;
 						}
 					}
-					if(keepOn){
-						cout << "Voulez-vous sélectionner une nouvelle empreinte ? (Y/N)" << endl;
-						cin >> more;
-						if(more=="N") keepOn = false;
-					}
+
+				}
+				if(keepOn){
+					cout << "Voulez-vous sélectionner une nouvelle empreinte ? (Y/N)" << endl;
+					cin >> more;
+					if(more=="N") keepOn = false;
 				}
 			}
 
