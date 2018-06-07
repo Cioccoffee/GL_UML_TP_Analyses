@@ -14,8 +14,8 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 //
 
-EmpreintePatient::EmpreintePatient(int id):Empreinte(id)
-{
+EmpreintePatient::EmpreintePatient(int id) :
+		Empreinte(id) {
 
 }
 
@@ -24,55 +24,64 @@ EmpreintePatient::EmpreintePatient(int id):Empreinte(id)
 //
 //}
 
-
 /*operator ==(const EmpreintePatient& m1, const EmpreintePatient& m2)
-{
-	//appelle le parent -> supprimer la m�thode
-}
+ {
+ //appelle le parent -> supprimer la m�thode
+ }
 
-bool estSimilaire(Empreinte &maladie)
-{
-	//appelle le parent
-}*/
+ bool estSimilaire(Empreinte &maladie)
+ {
+ //appelle le parent
+ }*/
 
-set<string> EmpreintePatient::analyser(map<int,EmpreinteMaladie> & catalogueMaladies){
-	//set<string> infections;
-	//infections.insert("");
+set<string> EmpreintePatient::analyser(map<int, EmpreinteMaladie> & catalogueMaladies) {
 
-	set<string> infections;
+	set < string > infections;
 	int i = 1;
-	cout <<i << endl;
-	    for(map<int,EmpreinteMaladie>::iterator it=catalogueMaladies.begin() ; it!=catalogueMaladies.end() ; ++it)
-	    {
-	    	cout << i <<endl;
-	        bool test = false;
-	        test = this->Empreinte::estSimilaire(it->second);
-	        if (test)
-	        {
-	            for (list<string>::iterator jt = (it->second).Maladies()->begin(); jt!=(it->second).Maladies()->end(); ++jt)
-	            {
-	                infections.insert(*jt);
-	            }
-	        }
-	        i++;
-	    }
-	    return infections;
+	cout << i << endl;
+	for (map<int, EmpreinteMaladie>::iterator it = catalogueMaladies.begin();
+			it != catalogueMaladies.end(); ++it) {
+		cout << i << endl;
+		bool test = false;
+		test = this->Empreinte::estSimilaire(it->second);
+		if (test) {
+			for (list<string>::iterator jt = (it->second).Maladies()->begin();
+					jt != (it->second).Maladies()->end(); ++jt) {
+				infections.insert(*jt);
+			}
+		}
+		i++;
+	}
+	return infections;
 
-
-	///return infections;
 }
+set<string> EmpreintePatient::analyser(map<int, EmpreinteMaladie *> & catalogueMaladies) {
+
+	set < string > infections;
+	for (map<int, EmpreinteMaladie *>::iterator it = catalogueMaladies.begin();it != catalogueMaladies.end(); ++it) {
+		bool test = false;
+		test = this->Empreinte::estSimilaire(*(it->second));
+		if (test) {
+			for (list<string>::iterator jt = (it->second)->Maladies()->begin();jt != (it->second)->Maladies()->end(); ++jt) {
+				infections.insert(*jt);
+			}
+		}
+	}
+	return infections;
+
+}
+
 string EmpreintePatient::toString() //appeler le parent
 {
 	string s = "";
-	s+="EmpreintePatient : \n";
-	s+=this->Empreinte::toString();
-	s+="\n";
+	s += "EmpreintePatient : \n";
+	s += this->Empreinte::toString();
+	s += "\n";
 
 	return s;
 }
 
-EmpreintePatient::~EmpreintePatient()
-{
+EmpreintePatient::~EmpreintePatient() {
 
 }
 //------------------------------------------------------------------ PRIVE

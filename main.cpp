@@ -324,6 +324,15 @@ void TestEmpreinteMaladie() {
 
 }
 
+static void AfficherResultats(set<string> infections) {
+	cout << "Le patient est potentiellement atteint de : " << endl;
+	for (set<string>::iterator it = infections.begin(); it != infections.end();
+			++it) {
+		cout << "- ";
+		cout << *it << endl;
+	}
+}
+
 void TestEmpreintePatient() {
 
 	Mesure m1("fievre", "double", "37.9");
@@ -392,9 +401,9 @@ void TestEmpreintePatient() {
 
 	//tester analyse
 
-	EmpreinteMaladie e4(1);
-	EmpreinteMaladie e5(2);
-	EmpreinteMaladie e6(3);
+	EmpreinteMaladie * e4 = new EmpreinteMaladie(1);
+	EmpreinteMaladie * e5 = new EmpreinteMaladie(2);
+	EmpreinteMaladie * e6 = new EmpreinteMaladie(3);
 
 	Mesure m14("fievre", "double", "37.9");
 	Mesure m24("pouls", "int", "95");
@@ -414,79 +423,118 @@ void TestEmpreintePatient() {
 	Mesure m434("couleur de la langue", "string", "blanche");
 	Mesure m534("pale", "bool", "true");
 
-	e4.ajouterMesure(m14);
-	e4.ajouterMesure(m24);
-	e4.ajouterMesure(m34);
-	e4.ajouterMesure(m44);
-	e4.ajouterMesure(m54);
+	e4->ajouterMesure(m14);
+	e4->ajouterMesure(m24);
+	e4->ajouterMesure(m34);
+	e4->ajouterMesure(m44);
+	e4->ajouterMesure(m54);
 
-	e5.ajouterMesure(m124);
-	e5.ajouterMesure(m224);
-	e5.ajouterMesure(m324);
-	e5.ajouterMesure(m424);
-	e5.ajouterMesure(m524);
+	e5->ajouterMesure(m124);
+	e5->ajouterMesure(m224);
+	e5->ajouterMesure(m324);
+	e5->ajouterMesure(m424);
+	e5->ajouterMesure(m524);
 
-	e6.ajouterMesure(m134);
-	e6.ajouterMesure(m234);
-	e6.ajouterMesure(m334);
-	e6.ajouterMesure(m434);
-	e6.ajouterMesure(m534);
+	e6->ajouterMesure(m134);
+	e6->ajouterMesure(m234);
+	e6->ajouterMesure(m334);
+	e6->ajouterMesure(m434);
+	e6->ajouterMesure(m534);
 
-	e4.ajouterMaladie("intoxication");
-	e4.ajouterMaladie("allergie");
+	e4->ajouterMaladie("intoxication");
+	e4->ajouterMaladie("allergie");
 
-	e5.ajouterMaladie("intoxication");
-	e5.ajouterMaladie("allergie");
+	e5->ajouterMaladie("chikoungounia");
+	e5->ajouterMaladie("allergie");
 
-	e6.ajouterMaladie("grippe");
-	e6.ajouterMaladie("choléra");
+	e6->ajouterMaladie("grippe");
+	e6->ajouterMaladie("choléra");
 
-	cout << e4.toString() << endl;
-	cout << e5.toString() << endl;
-	cout << e6.toString() << endl;
+	cout << e4->toString() << endl;
+	cout << e5->toString() << endl;
+	cout << e6->toString() << endl;
 
-	map<int, EmpreinteMaladie> * catalogueMaladies = new map<int,
-			EmpreinteMaladie>();
-//	catalogueMaladies[0]=e4;
-//	catalogueMaladies[1]=e5;
-//	catalogueMaladies[2]=e6;
-//	catalogueMaladies.insert(std::make_pair(0,e4));
-//	catalogueMaladies.insert(std::make_pair(1,e5));
-//	catalogueMaladies.insert(std::make_pair(2,e6));
-
-	cout << "before insert" << endl;
-	catalogueMaladies->insert(pair<int, EmpreinteMaladie>(0, e4));
-	catalogueMaladies->insert(pair<int, EmpreinteMaladie>(1, e5));
-	catalogueMaladies->insert(pair<int, EmpreinteMaladie>(2, e6));
-	cout << "before analyser" << endl;
+	map<int, EmpreinteMaladie*> * catalogueMaladies = new map<int,
+			EmpreinteMaladie*>();
+	(*catalogueMaladies)[0] = e4;
+	(*catalogueMaladies)[1] = e5;
+	(*catalogueMaladies)[2] = e6;
+//	cout << "before analyser" << endl;
 	set < string > infections1 = e.analyser(*catalogueMaladies);
 	set < string > infections2 = e2.analyser(*catalogueMaladies);
 	set < string > infections3 = e3.analyser(*catalogueMaladies);
 
-//	string st[] ={string("a"), string("b")};
-//	set<string> infections1 (st,st+1);
-	cout << "before print" << endl;
-	for (set<string>::iterator it = infections1.begin();
-			it != infections1.end(); ++it) {
-		cout << *it << endl;
-
-	}
+//	cout << "before print" << endl;
+	AfficherResultats (infections1);
+	AfficherResultats (infections2);
+	AfficherResultats (infections3);
 }
 
-int main() {
-	//TestMesureInt();
-	//TestMesureDouble();
-	//sTestMesureFloat();
-	//TestMesureString();
-	//TestEmpreinte();
-	//TestEmpreinteMaladie();
-	TestEmpreintePatient();
-	return 0;
+static void AfficherMaladies(set<string> * maladies) {
+
+	//test si vide
+	if(maladies->empty()){
+		cout << "Le système ne prendre en compre aucune maladie" <<endl;
+	}else{
+		cout << "Liste des maladies prises en compte par le système :" << endl;
+		for (set<string>::iterator it = maladies->begin(); it != maladies->end();++it) {
+			cout << "- ";
+			cout << (*it) << endl;
+		}
+	}
+
+}
+
+static void AfficherSymptomes(string maladie, set<string> * maladies,
+		multimap<string, EmpreinteMaladie*> * catalogueSymptomes) {
+
+	//teste si nom de maladie valide = maladie existe dans le système
+	if (maladies->find(maladie) != maladies->end()) {
+		cout << "La maladie " << maladie
+				<< " est caractérisée par les symptômes suivants :" << endl;
+		//find sur le catalogue d'empreinte puis affichage = equal_range pour avoir collection
+		//le premier itérateur est celui pointant sur le premier élément correspondant à la clef
+		//le second itérateur pointe sur lepremier élément après ceux de clef = maladie
+		multimap<string, EmpreinteMaladie*>::iterator it =
+				catalogueSymptomes->equal_range(maladie).first;
+		multimap<string, EmpreinteMaladie*>::iterator jt =
+				catalogueSymptomes->equal_range(maladie).second;
+		for (multimap<string, EmpreinteMaladie*>::iterator kt = it; kt != jt;
+				++kt) {
+			cout << "- ";
+			cout << kt->second->Empreinte::toString() << endl;
+		}
+	} else {
+		cout << "La maladie " << maladie << " n'est pas connue du système"
+				<< endl;
+	}
+
+}
+
+static void AfficherEmpreintesPatient(
+		map<int, EmpreintePatient*> * catalogueEmpreintes) {
+	cout << "Liste des empreintes patient analysables : " << endl;
+	for (map<int, EmpreintePatient *>::iterator it =
+			catalogueEmpreintes->begin(); it != catalogueEmpreintes->end();
+			++it) {
+		cout << "- " << it->second->toString() << endl;
+	}
+
 }
 
 static void Menu()
 // Algorithme :
 {
+	map<int, EmpreinteMaladie*> * catalogueMaladies = new map<int,
+			EmpreinteMaladie*>();
+	map<int, EmpreintePatient*> * catalogueEmpreintes = new map<int,
+			EmpreintePatient*>();
+	set < string > *maladies = new set<string>();
+	/*annuaire inversé permettant de retrouver toutes les empreintes caractéristiques d'une
+	 maladie à partir de son nom*/
+	multimap<string, EmpreinteMaladie*> * catalogueSymptomes = new multimap<
+			string, EmpreinteMaladie*>();
+
 	cout << "Veuillez choisir une option: " << endl;
 	cout << "1. Charger des données depuis un fichier " << endl;
 	cout << "2. Afficher la liste des maladies prises en compte " << endl;
@@ -501,63 +549,128 @@ static void Menu()
 		switch (action) {
 
 		case 1: {
-			cout << "Veuillez saisir le nom du fichier de données à charger" << endl;
-
+			cout << "Veuillez saisir le nom du fichier de données à charger"
+					<< endl;
+			action = 0;
 			break;
 		}
 
 		case 2: {
-			//			cout << "Ville de depart ?" << endl;
-			//			cin >> depart;
-			//			cout << "Ville d'arrivee ?" << endl;
-			//			cin >> arrivee;
-			//			;
+			AfficherMaladies (maladies);
+			action = 0;
 			break;
 		}
 
 		case 3: {
+			string maladie;
+			AfficherMaladies (maladies);
+			cout<< "Veuillez saisir le nom d'une des maladies présentées dont vous souhaitez connaître les symptomes :" <<endl;
+			cin >> maladie;
+			AfficherSymptomes(maladie, maladies, catalogueSymptomes);
 			action = 0;
 			break;
 		}
-		}
 
-		case 4:
-		{
+		case 4: {
+			int i;
+			AfficherEmpreintesPatient(catalogueEmpreintes);
+			cout
+					<< "Veuillez saisir l'identifiant (numéro) de l'empreinte à analyser : "
+					<< endl;
+			cin >> i;
+			//get emp d'id i
+			// analyser empreinte
+			bool badId = true;
+			while (badId) {
+				map<int, EmpreintePatient *>::iterator it =
+						catalogueEmpreintes->find(i);
+				if (it != catalogueEmpreintes->end()) {
+					EmpreintePatient e = *(it->second);
+					e.analyser(*catalogueMaladies);
+					badId = false;
+				} else {
+					cout << "Cet identifiant d'empreinte n'est pas valide."
+							<< endl;
+					cout << "Veuillez saisir un identifiant valide ou -1 pour sortir: " << endl;
+					cin >> i;
+					if(i==-1)badId = false;
+				}
+			}
+
+			//exit ?
+
 			action = 0;
 			break;
 		}
 
-		case 5:
-		{
-			//appel m�thode de recherche
-			//			char depart[1024];
-			//			char arrivee[1024];
-			//			cout << "Quelle est votre ville de d�part ?" << endl;
-			//			cin >> depart;
-			//			cout << "Quelle est votre destination ?" << endl;
-			//			cin >> arrivee;
-			//			action = 0;
+		case 5: {
+			int i;
+			string more;
+			AfficherEmpreintesPatient(catalogueEmpreintes);
+			cout<< "Veuillez saisir l'identifiant (numéro) de l'empreinte à analyser : "<< endl;
+			cin >> i;
+			//get emp d'id i
+			// analyser empreinte
+			bool keepOn = true;
+			while(keepOn){
+				bool badId = true;
+				while (badId) {
+					map<int, EmpreintePatient *>::iterator it =
+							catalogueEmpreintes->find(i);
+					if (it != catalogueEmpreintes->end()) {
+						EmpreintePatient e = *(it->second);
+						e.analyser(*catalogueMaladies);
+						badId = false;
+					} else {
+						cout << "Cet identifiant d'empreinte n'est pas valide."
+								<< endl;
+						cout << "Veuillez saisir un identifiant valide ou -1 pour sortir: " << endl;
+						cin >> i;
+						if(i==-1){
+							badId = false;
+							keepOn = false;
+						}
+					}
+					if(keepOn){
+						cout << "Voulez-vous sélectionner une nouvelle empreinte ? (Y/N)" << endl;
+						cin >> more;
+						if(more=="N") keepOn = false;
+					}
+				}
+			}
+
+			//exit ?
+			action = 0;
 			break;
 		}
 
-		case 6:
-		{
+		case 6: {
 			//stopper l'exécution
 			return;
 			break;
 		}
-	}
-	cout << "Veuillez choisir une option: " << endl;
-	cout << "1. Charger des données depuis un fichier " << endl;
-	cout << "2. Afficher la liste des maladies prises en compte " << endl;
-	cout << "3. Afficher les symptômes associés à une maladie " << endl;
-	cout << "4. Analyser une empreinte " << endl;
-	cout << "5. Analyser plusieurs empreintes " << endl;
-	cout << "6. Quitter l’application" << endl;
-	cin >> action;
-} //----- Fin de Menu
+		}
+		cout << "Veuillez choisir une option: " << endl;
+		cout << "1. Charger des données depuis un fichier " << endl;
+		cout << "2. Afficher la liste des maladies prises en compte " << endl;
+		cout << "3. Afficher les symptômes associés à une maladie " << endl;
+		cout << "4. Analyser une empreinte " << endl;
+		cout << "5. Analyser plusieurs empreintes " << endl;
+		cout << "6. Quitter l’application" << endl;
+		cin >> action;
+	} //----- Fin de Menu
 
-} //----- Fin de Menu
-  //	} else return;
+}
+
+int main() {
+	//TestMesureInt();
+	//TestMesureDouble();
+	//sTestMesureFloat();
+	//TestMesureString();
+	//TestEmpreinte();
+	//TestEmpreinteMaladie();
+	//TestEmpreintePatient();
+	Menu();
+	return 0;
 }
 

@@ -39,6 +39,8 @@ public:
 
 	set<string> analyser(map<int,EmpreinteMaladie> & catalogueMaladies);
 
+	set<string> analyser(map<int,EmpreinteMaladie *> & catalogueMaladies);
+
 	string toString();
 	// Mode d'emploi :
 	//
