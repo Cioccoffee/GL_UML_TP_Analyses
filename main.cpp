@@ -3,6 +3,7 @@
 #include "Empreinte.h"
 #include "EmpreinteMaladie.h"
 #include "EmpreintePatient.h"
+#include "ChargerFichier.h"
 
 void TestMesureDouble() {
 	//Mesure m1 = new Mesure ("fievre", "double", "37.9");
@@ -395,23 +396,41 @@ void TestEmpreintePatient() {
 	EmpreinteMaladie e5(2);
 	EmpreinteMaladie e6(3);
 
-	e4.ajouterMesure(m1);
-	e4.ajouterMesure(m2);
-	e4.ajouterMesure(m3);
-	e4.ajouterMesure(m4);
-	e4.ajouterMesure(m5);
+	Mesure m14("fievre", "double", "37.9");
+	Mesure m24("pouls", "int", "95");
+	Mesure m34("toxine", "float", "100.5");
+	Mesure m44("couleur de la langue", "string", "blanche");
+	Mesure m54("pale", "bool", "true");
 
-	e5.ajouterMesure(m12);
-	e5.ajouterMesure(m22);
-	e5.ajouterMesure(m32);
-	e5.ajouterMesure(m42);
-	e5.ajouterMesure(m52);
+	Mesure m124("fievre", "double", "37.9");
+	Mesure m224("pouls", "int", "95");
+	Mesure m324("toxine", "float", "100.5");
+	Mesure m424("couleur de la langue", "string", "blanche");
+	Mesure m524("pale", "bool", "true");
 
-	e6.ajouterMesure(m13);
-	e6.ajouterMesure(m23);
-	e6.ajouterMesure(m33);
-	e6.ajouterMesure(m43);
-	e6.ajouterMesure(m53);
+	Mesure m134("fievre", "double", "37.9");
+	Mesure m234("pouls", "int", "70");
+	Mesure m334("toxine", "float", "100.5");
+	Mesure m434("couleur de la langue", "string", "blanche");
+	Mesure m534("pale", "bool", "true");
+
+	e4.ajouterMesure(m14);
+	e4.ajouterMesure(m24);
+	e4.ajouterMesure(m34);
+	e4.ajouterMesure(m44);
+	e4.ajouterMesure(m54);
+
+	e5.ajouterMesure(m124);
+	e5.ajouterMesure(m224);
+	e5.ajouterMesure(m324);
+	e5.ajouterMesure(m424);
+	e5.ajouterMesure(m524);
+
+	e6.ajouterMesure(m134);
+	e6.ajouterMesure(m234);
+	e6.ajouterMesure(m334);
+	e6.ajouterMesure(m434);
+	e6.ajouterMesure(m534);
 
 	e4.ajouterMaladie("intoxication");
 	e4.ajouterMaladie("allergie");
@@ -426,8 +445,8 @@ void TestEmpreintePatient() {
 	cout << e5.toString() << endl;
 	cout << e6.toString() << endl;
 
-
-	map<int,EmpreinteMaladie> catalogueMaladies;
+	map<int, EmpreinteMaladie> * catalogueMaladies = new map<int,
+			EmpreinteMaladie>();
 //	catalogueMaladies[0]=e4;
 //	catalogueMaladies[1]=e5;
 //	catalogueMaladies[2]=e6;
@@ -435,22 +454,23 @@ void TestEmpreintePatient() {
 //	catalogueMaladies.insert(std::make_pair(1,e5));
 //	catalogueMaladies.insert(std::make_pair(2,e6));
 
-	catalogueMaladies.insert(pair<int,EmpreinteMaladie>(0, e4));
-	catalogueMaladies.insert(pair<int,EmpreinteMaladie>(1, e5));
-	catalogueMaladies.insert(pair<int,EmpreinteMaladie>(2, e6));
-
-	set<string> infections1 = e.analyser(catalogueMaladies);
-	set<string> infections2 = e2.analyser(catalogueMaladies);
-	set<string> infections3 = e3.analyser(catalogueMaladies);
+	cout << "before insert" << endl;
+	catalogueMaladies->insert(pair<int, EmpreinteMaladie>(0, e4));
+	catalogueMaladies->insert(pair<int, EmpreinteMaladie>(1, e5));
+	catalogueMaladies->insert(pair<int, EmpreinteMaladie>(2, e6));
+	cout << "before analyser" << endl;
+	set < string > infections1 = e.analyser(*catalogueMaladies);
+	set < string > infections2 = e2.analyser(*catalogueMaladies);
+	set < string > infections3 = e3.analyser(*catalogueMaladies);
 
 //	string st[] ={string("a"), string("b")};
 //	set<string> infections1 (st,st+1);
-	cout << "before print"<<endl;
-	for(set<string>::iterator it=infections1.begin() ; it!=infections1.end() ; ++it)
-		    {
-		cout << *it <<endl;
+	cout << "before print" << endl;
+	for (set<string>::iterator it = infections1.begin();
+			it != infections1.end(); ++it) {
+		cout << *it << endl;
 
-		    }
+	}
 }
 
 int main() {
@@ -460,6 +480,84 @@ int main() {
 	//TestMesureString();
 	//TestEmpreinte();
 	//TestEmpreinteMaladie();
-	//TestEmpreintePatient();
+	TestEmpreintePatient();
 	return 0;
 }
+
+static void Menu()
+// Algorithme :
+{
+	cout << "Veuillez choisir une option: " << endl;
+	cout << "1. Charger des données depuis un fichier " << endl;
+	cout << "2. Afficher la liste des maladies prises en compte " << endl;
+	cout << "3. Afficher les symptômes associés à une maladie " << endl;
+	cout << "4. Analyser une empreinte " << endl;
+	cout << "5. Analyser plusieurs empreintes " << endl;
+	cout << "6. Quitter l’application" << endl;
+
+	int action;
+	cin >> action;
+	while (action >= 1 && (action <= 7)) {
+		switch (action) {
+
+		case 1: {
+			cout << "Veuillez saisir le nom du fichier de données à charger" << endl;
+
+			break;
+		}
+
+		case 2: {
+			//			cout << "Ville de depart ?" << endl;
+			//			cin >> depart;
+			//			cout << "Ville d'arrivee ?" << endl;
+			//			cin >> arrivee;
+			//			;
+			break;
+		}
+
+		case 3: {
+			action = 0;
+			break;
+		}
+		}
+
+		case 4:
+		{
+			action = 0;
+			break;
+		}
+
+		case 5:
+		{
+			//appel m�thode de recherche
+			//			char depart[1024];
+			//			char arrivee[1024];
+			//			cout << "Quelle est votre ville de d�part ?" << endl;
+			//			cin >> depart;
+			//			cout << "Quelle est votre destination ?" << endl;
+			//			cin >> arrivee;
+			//			action = 0;
+			break;
+		}
+
+		case 6:
+		{
+			//stopper l'exécution
+			return;
+			break;
+		}
+	}
+	cout << "Veuillez choisir une option: " << endl;
+	cout << "1. Charger des données depuis un fichier " << endl;
+	cout << "2. Afficher la liste des maladies prises en compte " << endl;
+	cout << "3. Afficher les symptômes associés à une maladie " << endl;
+	cout << "4. Analyser une empreinte " << endl;
+	cout << "5. Analyser plusieurs empreintes " << endl;
+	cout << "6. Quitter l’application" << endl;
+	cin >> action;
+} //----- Fin de Menu
+
+} //----- Fin de Menu
+  //	} else return;
+}
+
