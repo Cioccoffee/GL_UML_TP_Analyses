@@ -6,11 +6,24 @@ using namespace std;
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <set>
+#include <vector>
 
 //------------------------------------------------------ Include personnel
 #include "ChargerFichier.h"
 
 //------------------------------------------------------------- Constantes
+#define FICHIERMETADONNEES "HealthMeasurementDescription.txt"
+#define ENTETEPATIENT "NoID;A1;A2;A3;A4;"
+#define ENTETEMALADIE "NoID;A1;A2;A3;A4;Disease"
+#define FINDELECTURE true
+#define ERREURDELECTURE false
+#define ENTETENONCONFORME false
+#define EMPREINTEPATIENT 200
+#define EMPREINTEMALADIE 100
+#define ERREUR 0
+#define NBVALEURS 4
+#define SAIN "Aucune maladie"
 
 //----------------------------------------------------------------- PUBLIC
 
@@ -19,84 +32,97 @@ ChargerFichier::ChargerFichier(){}
 
 ChargerFichier::~ChargerFichier(){}
 
-/*EmpreinteMaladie ChargerFichier::chargerMaladie (stringstream &ss, string** formatDonnees){
-    /*int id;
-    int valeurs[5];
+EmpreinteMaladie* ChargerFichier::chargerMaladie (stringstream &ss, string** formatDonnees, set<string> &maladies){
+    int id;
+    string valeurs[NBVALEURS];
+    string a;
     string nomMaladie;
-    ss >> id;
-    Empreinte e = new Empreinte(id);
-    for (int i=0; i<5 ; ++i){
-        ss >> valeurs[i];
-        Mesure m = new Mesure(formatDonnees[i+1][0], formatDonnees[i+1][1], valeurs[i]);
-        e.ajouterMesure(m);
+    getline(ss, a, ';');
+    id = atoi(a.c_str());
+    EmpreinteMaladie* maladie = new EmpreinteMaladie(id);
+    for (int i=0; i<NBVALEURS ; ++i){
+        getline(ss, valeurs[i], ';');
+        Mesure* m = new Mesure(formatDonnees[i+1][0], formatDonnees[i+1][1], valeurs[i]);
+        maladie->ajouterMesure(*m);
     }
-    ss >> nomMaladie;
+    if (!ss.eof()){
+        getline(ss, nomMaladie);
+    }
+    else{
+        nomMaladie = SAIN;
+    }
+    maladie->ajouterMaladie(nomMaladie);
+    maladies.insert(nomMaladie);
+    return maladie;
+}
 
-    Empreinte e = chargerEmpreinte(ss, formatDonnees);
-    string nomMaladie;
-    ss >> nomMaladie;
-    //EmpreinteMaladie maladie = new EmpreinteMaladie(nomMaladie, e);
-    //return maladie;
-}*/
-
-Empreinte ChargerFichier::chargerEmpreinte (stringstream &ss, string** formatDonnees){
+EmpreintePatient* ChargerFichier::chargerEmpreintePatient (stringstream &ss, string** formatDonnees){
     int id;
     string a;
-    string valeurs[5];
-    ss >> a;
+    string valeurs[NBVALEURS];
+    getline(ss, a, ';');
     id = atoi(a.c_str());
-    Empreinte* e = new Empreinte(id);
-    for (int i=0; i<5 ; ++i){
-        ss >> valeurs[i];
+    EmpreintePatient* e = new EmpreintePatient(id);
+    for (int i=0; i<NBVALEURS ; ++i){
+        if (i!=NBVALEURS-1){
+            getline(ss, valeurs[i], ';');
+        }
+        else{
+            getline(ss, valeurs[i]);
+        }
         Mesure* m = new Mesure(formatDonnees[i+1][0], formatDonnees[i+1][1], valeurs[i]);
         e->ajouterMesure(*m);
     }
+    return e;
+    return NULL;
 }
 
-void ChargerFichier::chargerCollectionMaladies(map<int, EmpreinteMaladie> &catalogueMaladies, stringstream &ss, string** formatDonnees){
-    EmpreinteMaladie maladie = chargerMaladie(ss, formatDonnees);
-    //catalogueMaladies.insert(pair<int, EmpreinteMaladie>(,maladie));
-}
-
-void ChargerFichier::chargerCollectionEmpreintes(map<int, Empreinte> &catalogueEmpreintes, stringstream &ss, string** formatDonnees){
-    Empreinte empreinte = chargerEmpreinte(ss, formatDonnees);
-    //catalogueEmpreintes.insert(pair<int, Empreinte>(,empreinte));
-}
-
-string ChargerFichier::getTypeDonnees(stringstream &ss){
-    string type, ligne;
-    ss >> ligne;
-    string patient = "NoID;A1;A2;A3;A4;AZ51";
-    string maladie = "NoID;A1;A2;A3;A4;AZ51;Disease";
-    string erreur = "erreur";
-    string empreintePatient = "patients";
-    string empreinteMaladie = "maladies";
-    if (ligne==patient){
-        return empreintePatient;
+void ChargerFichier::chargerCollectionMaladies(map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, stringstream &ss, string** formatDonnees, set<string> &maladies){
+    EmpreinteMaladie* maladie = chargerMaladie(ss, formatDonnees, maladies);
+    bool added = false;
+    for (auto it = catalogueMaladies.begin(); it!=catalogueMaladies.end() && added == false; ++it){
+        if (maladie->Id() == it->second->Id()){
+            it->second->ajouterMaladie(*(maladie->Maladies()->begin()));
+            added = true;
+        }
     }
-    else if (ligne==maladie){
-        return empreinteMaladie;
+    if (added == false){
+        catalogueMaladies.insert(pair<int, EmpreinteMaladie*>(maladie->Id(),maladie));
+    }
+}
+
+void ChargerFichier::chargerCollectionEmpreintes(map<int, EmpreintePatient*> &catalogueEmpreintes, stringstream &ss, string** formatDonnees){
+    EmpreintePatient* empreinte = chargerEmpreintePatient(ss, formatDonnees);
+    catalogueEmpreintes.insert(pair<int, EmpreintePatient*>(empreinte->Id(), empreinte));
+}
+
+int ChargerFichier::getTypeDonnees(stringstream &ss){
+    string ligne;
+    getline(ss, ligne);
+    if (ligne==ENTETEPATIENT){
+        return EMPREINTEPATIENT;
+    }
+    else if (ligne==ENTETEMALADIE){
+        return EMPREINTEMALADIE;
     }
     else{
-        return erreur;
+        return ERREUR;
     }
 }
 
 string** ChargerFichier::getFormatDonnees (){
     //Calculer le nombre de ligne du fichier
     unsigned int nbLignes = 0;
-    ifstream in("nomFichierMetadonnees" , ios::in);
-    std::string ligne;
+    ifstream in(FICHIERMETADONNEES, ios::in);
+    string ligne;
     while(std::getline(in, ligne)){
         nbLignes++;
     }
     in.close();
-    //
     //Dégager l'entete
-    ifstream ifs("nomFichierMetadonnees");
+    ifstream ifs(FICHIERMETADONNEES);
     string entete;
-    ifs >> entete;
-    //
+    getline(ifs, entete);
     //Lire depuis le fichier + Remplir variable + return
     string** formatDonnees = new string*[nbLignes-1] ;
     for(unsigned int i = 0; i < nbLignes-1; ++i){
@@ -108,11 +134,47 @@ string** ChargerFichier::getFormatDonnees (){
     }
     ifs.close();
     return formatDonnees;
-    //
 }
 
-void ChargerFichier::charger(string nom, map<int, EmpreinteMaladie> &catalogueMaladies, map<int, Empreinte> &catalogueEmpreintes){
-    string** formatDonnees = getFormatDonnees();    
+bool ChargerFichier::charger(string nom, map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, map<int, EmpreintePatient*> &catalogueEmpreintes, set<string> &maladies){
+    //Test d'ouverture du fichier
+    ifstream in(nom, ios::in);    
+    if (!in){
+        return ERREURDELECTURE;
+    }
+    string line;
+    getline(in, line);
+    stringstream ss(line);
+    //Lecture de l'entête du fichier pour s’il contient des empreintes de maladies ou des empreintes à analyser
+    int typeDonnees = getTypeDonnees(ss);
+    if (typeDonnees==ERREUR){
+        return ENTETENONCONFORME;
+    }
+    //Lecture de fichier de metadonnées
+    string** formatDonnees = getFormatDonnees(); 
+    //Chargement des données selon le type de données du fichier 
+    if(typeDonnees == EMPREINTEPATIENT){
+        while (!in.eof()){
+            getline(in, line);
+            ss << line;
+            chargerCollectionEmpreintes(catalogueEmpreintes, ss, formatDonnees);
+        }
+    }
+    else if (typeDonnees == EMPREINTEMALADIE){
+        while (!in.eof()){
+            getline(in, line);
+            size_t npos = -1;
+            if (line.find(';')==npos){
+                continue;
+            }
+            cout << line << endl;
+            ss.clear();
+            ss.str(line);
+            chargerCollectionMaladies(catalogueMaladies, catalogueSymptomes,ss, formatDonnees, maladies);
+        }
+    }
+    in.close();
+    return FINDELECTURE;
 }
 
 //------------------------------------------------------------------ PRIVE

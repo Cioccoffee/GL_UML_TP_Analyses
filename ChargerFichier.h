@@ -10,6 +10,7 @@ using namespace std;
 #include <set>
 #include <string>
 #include "EmpreinteMaladie.h"
+#include "EmpreintePatient.h"
 #include "Empreinte.h"
 #include "Mesure.h"
 //------------------------------------------------------------- Constantes
@@ -27,30 +28,30 @@ class ChargerFichier {
 
 public:
 //----------------------------------------------------- Méthodes publiques
-	EmpreinteMaladie chargerMaladie (stringstream &ss, string** formatDonnees);
+	EmpreinteMaladie* chargerMaladie (stringstream &ss, string** formatDonnees, set<string> &maladies);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Charger une ligne depuis un fichier contenant des données de maladies
 	//
 	// Contrat:
 	//
-    Empreinte chargerEmpreinte (stringstream &ss, string** formatDonnees);
+    EmpreintePatient* chargerEmpreintePatient (stringstream &ss, string** formatDonnees);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Charger une ligne depuis un fichier contenant des données d'empreintes
 	//
 	// Contrat:
 	//
-    void chargerCollectionMaladies(map<int, EmpreinteMaladie> &catalogueMaladies, stringstream &ss, string** formatDonnees);
+    void chargerCollectionMaladies(map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, stringstream &ss, string** formatDonnees, set<string> &maladies);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Charger une collection de maladies depuis un fichier
 	//
 	// Contrat:
 	//
-    void chargerCollectionEmpreintes(map<int, Empreinte> &catalogueEmpreintes, stringstream &ss, string** formatDonnees);
+    void chargerCollectionEmpreintes(map<int, EmpreintePatient*> &catalogueEmpreintes, stringstream &ss, string** formatDonnees);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Charger une collection d"empreintes depuis un fichier
 	//
 	// Contrat:
-    string getTypeDonnees(stringstream &ss);
+    int getTypeDonnees(stringstream &ss);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Renvoyer le type de données enregistré dans un fichier
 	//
@@ -60,7 +61,7 @@ public:
 	// Mode d'emploi: Déterminner le type des données
 	//
 	// Contrat:
-    void charger(string nom, map<int, EmpreinteMaladie> &catalogueMaladies, map<int, Empreinte> &catalogueEmpreintes);
+    bool charger(string nom, map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, map<int, EmpreintePatient*> &catalogueEmpreintes, set<string> &maladies);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Charger un fichier
 	//
