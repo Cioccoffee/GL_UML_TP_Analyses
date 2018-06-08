@@ -1,69 +1,38 @@
-#makefile pour compilation et reliure
-
-#variables
-RM = rm
-COMP = g++
-EDL = g++
-
-INT = Empreinte.h EmpreinteMaladie.h Mesure.h EmpreintePatient.h
-
-REAL=$(INT:.h=.cpp)
-OBJ=$(REAL:.cpp=.o) main.o 
-
-EXE = executable
-
-RMFLAGS = -f
+# définition des variables
+EXEC = main.x
+SRC = main.cpp Empreinte.cpp EmpreinteMaladie.cpp EmpreintePatient.cpp Mesure.cpp ChargerFichier.cpp
+OBJ = $(SRC:.cpp=.o)
 COMPFLAGS = -ansi -pedantic -Wall -std=c++11
-EDLFLAGS = 
-CLEAN = clean
+EDL = g++
+COMP = @g++
+ECHO = @echo
+RM = rm
+CD = cd
+RMFLAGS = -f
+REP_BIN = bin/
+REP_TEST = Tests/
+EXEC_MKTEST = ./mktest.sh
+CLEAN = efface
 
-#useless
-#$(REAL) : $(INT)
-#$(OBJ) : $(REAL)
+$(EXEC): $(OBJ)
+	$(ECHO) "Edition des liens de test: "
+	$(EDL) -o $(EXEC) $^ 
 
-#realisation de l'executable
-$(EXE) : $(OBJ)
-	$(EDL) -o $(EXE) $(OBJ)
+%.o: %.cpp
+	$(ECHO) "Compilation de <$<>: "
+	$(COMP) -c $< $(COMPFLAGS)  
 
-#pattern pour la reliure
-#%.o:%.cpp
-#	$(COMP) -g $(COMPFLAGS) -c $<
+test:	
+	$(MAKE)
+	$(ECHO) "Lancement des tests:"
+	$(ECHO) ""
+	($(CD) $(REP_TEST) && bash $(EXEC_MKTEST) )
 
-# Explicit compilation rules
-
-
-# Compilation of main
-main.o : Mesure.h Empreinte.h EmpreinteMaladie.h  EmpreintePatient.h
-
-# Compilation of Mesure
-Mesure.o : Mesure.cpp Mesure.h
-
-# Compilation of Empreinte
-Empreinte.o : Empreinte.cpp Empreinte.h Mesure.h
-
-# Compilation of EmpreinteMaladie
-EmpreinteMaladie.o : EmpreinteMaladie.cpp EmpreinteMaladie.h Empreinte.h Mesure.h
-
-# Compilation of EmpreinteMaladie
-EmpreintePatient.o : EmpreintePatient.h EmpreinteMaladie.cpp EmpreinteMaladie.h Empreinte.h Mesure.h
-
-# Compilation of Maladie
-#Maladie.o : Maladie.cpp Maladie.h Empreinte.h Catalogue.h
-
-# Compilation of ChargerFichier
-#FileParser.o : FileParser.cpp FileParser.h Attribut.h Empreinte.h \
-#Catalogue.h Maladie.h
-
-
-# ------ end of Explicit compilation rules
-
-
+#Suppression
 
 $(CLEAN):
-	$(RM) $(RMFLAGS) $(EXE) $(OBJ) core
+	$(RM) $(RMFLAGS) *.gch $(OBJ) $(EXEC) core
 
 
-
-
-	
-
+# $^ toutes les dependances
+# $< première dépendance

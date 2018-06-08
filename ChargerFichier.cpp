@@ -3,6 +3,7 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <stdlib.h>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -14,11 +15,13 @@ using namespace std;
 
 //------------------------------------------------------------- Constantes
 #define FICHIERMETADONNEES "HealthMeasurementDescription.txt"
-#define ENTETEPATIENT "NoID;A1;A2;A3;A4;"
+#define ENTETEPATIENT "NoID;A1;A2;A3;A4"
 #define ENTETEMALADIE "NoID;A1;A2;A3;A4;Disease"
-#define FINDELECTURE true
-#define ERREURDELECTURE false
-#define ENTETENONCONFORME false
+#define FINDELECTURE 1
+#define ERREURDELECTURE 404
+#define ENTETENONCONFORME 300
+#define LECTUREEMPREINTEPATIENT 200
+#define LECTUREEMPREINTEMALADIE 100
 #define EMPREINTEPATIENT 200
 #define EMPREINTEMALADIE 100
 #define ERREUR 0
@@ -32,7 +35,7 @@ ChargerFichier::ChargerFichier(){}
 
 ChargerFichier::~ChargerFichier(){}
 
-EmpreinteMaladie* ChargerFichier::chargerMaladie (stringstream &ss, string** formatDonnees, set<string> &maladies){
+EmpreinteMaladie* ChargerFichier::chargerMaladie (stringstream &ss, string** formatDonnees, set<string> &maladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes){
     int id;
     string valeurs[NBVALEURS];
     string a;
@@ -45,14 +48,15 @@ EmpreinteMaladie* ChargerFichier::chargerMaladie (stringstream &ss, string** for
         Mesure* m = new Mesure(formatDonnees[i+1][0], formatDonnees[i+1][1], valeurs[i]);
         maladie->ajouterMesure(*m);
     }
-    if (!ss.eof()){
-        getline(ss, nomMaladie);
-    }
-    else{
+    getline(ss, nomMaladie);
+    if (nomMaladie.length()==0){
         nomMaladie = SAIN;
     }
-    maladie->ajouterMaladie(nomMaladie);
-    maladies.insert(nomMaladie);
+    if (nomMaladie != SAIN){ 
+        maladies.insert(nomMaladie);
+    }
+    maladie->ajouterMaladie(nomMaladie);    
+    catalogueSymptomes.insert(pair<string, EmpreinteMaladie*>(nomMaladie, maladie));
     return maladie;
 }
 
@@ -74,11 +78,10 @@ EmpreintePatient* ChargerFichier::chargerEmpreintePatient (stringstream &ss, str
         e->ajouterMesure(*m);
     }
     return e;
-    return NULL;
 }
 
 void ChargerFichier::chargerCollectionMaladies(map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, stringstream &ss, string** formatDonnees, set<string> &maladies){
-    EmpreinteMaladie* maladie = chargerMaladie(ss, formatDonnees, maladies);
+    EmpreinteMaladie* maladie = chargerMaladie(ss, formatDonnees, maladies, catalogueSymptomes);
     bool added = false;
     for (auto it = catalogueMaladies.begin(); it!=catalogueMaladies.end() && added == false; ++it){
         if (maladie->Id() == it->second->Id()){
@@ -136,7 +139,7 @@ string** ChargerFichier::getFormatDonnees (){
     return formatDonnees;
 }
 
-bool ChargerFichier::charger(string nom, map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, map<int, EmpreintePatient*> &catalogueEmpreintes, set<string> &maladies){
+int ChargerFichier::charger(string nom, map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, map<int, EmpreintePatient*> &catalogueEmpreintes, set<string> &maladies){
     //Test d'ouverture du fichier
     ifstream in(nom, ios::in);    
     if (!in){
@@ -153,25 +156,30 @@ bool ChargerFichier::charger(string nom, map<int, EmpreinteMaladie*> &catalogueM
     //Lecture de fichier de metadonnées
     string** formatDonnees = getFormatDonnees(); 
     //Chargement des données selon le type de données du fichier 
+    size_t npos = -1;
     if(typeDonnees == EMPREINTEPATIENT){
         while (!in.eof()){
             getline(in, line);
-            ss << line;
+            if (line.find(';')==npos){
+                continue;
+            }
+            ss.clear();
+            ss.str(line);
             chargerCollectionEmpreintes(catalogueEmpreintes, ss, formatDonnees);
         }
+        return LECTUREEMPREINTEPATIENT;
     }
     else if (typeDonnees == EMPREINTEMALADIE){
         while (!in.eof()){
             getline(in, line);
-            size_t npos = -1;
             if (line.find(';')==npos){
                 continue;
             }
-            cout << line << endl;
             ss.clear();
             ss.str(line);
             chargerCollectionMaladies(catalogueMaladies, catalogueSymptomes,ss, formatDonnees, maladies);
         }
+        return LECTUREEMPREINTEMALADIE;
     }
     in.close();
     return FINDELECTURE;

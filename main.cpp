@@ -5,6 +5,12 @@
 #include "EmpreintePatient.h"
 #include "ChargerFichier.h"
 
+#define FINDELECTURE 1
+#define ERREURDELECTURE 404
+#define ENTETENONCONFORME 300
+#define LECTUREEMPREINTEPATIENT 200
+#define LECTUREEMPREINTEMALADIE 100
+
 void TestMesureDouble() {
 	//Mesure m1 = new Mesure ("fievre", "double", "37.9");
 	Mesure m1("fievre", "double", "37.9");
@@ -474,7 +480,7 @@ static void AfficherMaladies(set<string> * maladies) {
 
 	//test si vide
 	if(maladies->empty()){
-		cout << "Le système ne prendre en compre aucune maladie" <<endl;
+		cout << "Le système ne prendre en compte aucune maladie" <<endl;
 	}else{
 		cout << "Liste des maladies prises en compte par le système :" << endl;
 		for (set<string>::iterator it = maladies->begin(); it != maladies->end();++it) {
@@ -525,132 +531,15 @@ static void AfficherEmpreintesPatient(
 static void Menu()
 // Algorithme :
 {
-	map<int, EmpreinteMaladie*> * catalogueMaladies = new map<int,
-			EmpreinteMaladie*>();
-	map<int, EmpreintePatient*> * catalogueEmpreintes = new map<int,
-			EmpreintePatient*>();
+	map<int, EmpreinteMaladie*> * catalogueMaladies = new map<int, EmpreinteMaladie*>();
+	map<int, EmpreintePatient*> * catalogueEmpreintes = new map<int, EmpreintePatient*>();
 	set < string > *maladies = new set<string>();
 	/*annuaire inversé permettant de retrouver toutes les empreintes caractéristiques d'une
 	 maladie à partir de son nom*/
-	multimap<string, EmpreinteMaladie*> * catalogueSymptomes = new multimap<
-			string, EmpreinteMaladie*>();
+	multimap<string, EmpreinteMaladie*> * catalogueSymptomes = new multimap<string, EmpreinteMaladie*>();
 
-	cout << "Veuillez choisir une option: " << endl;
-	cout << "1. Charger des données depuis un fichier " << endl;
-	cout << "2. Afficher la liste des maladies prises en compte " << endl;
-	cout << "3. Afficher les symptômes associés à une maladie " << endl;
-	cout << "4. Analyser une empreinte " << endl;
-	cout << "5. Analyser plusieurs empreintes " << endl;
-	cout << "6. Quitter l’application" << endl;
-
-	int action;
-	cin >> action;
-	while (action >= 1 && (action <= 7)) {
-		switch (action) {
-
-		case 1: {
-			cout << "Veuillez saisir le nom du fichier de données à charger"
-					<< endl;
-			action = 0;
-			break;
-		}
-
-		case 2: {
-			AfficherMaladies (maladies);
-			action = 0;
-			break;
-		}
-
-		case 3: {
-			string maladie;
-			AfficherMaladies (maladies);
-			cout<< "Veuillez saisir le nom d'une des maladies présentées dont vous souhaitez connaître les symptomes :" <<endl;
-			cin >> maladie;
-			AfficherSymptomes(maladie, maladies, catalogueSymptomes);
-			action = 0;
-			break;
-		}
-
-		case 4: {
-			int i;
-			AfficherEmpreintesPatient(catalogueEmpreintes);
-			cout
-					<< "Veuillez saisir l'identifiant (numéro) de l'empreinte à analyser : "
-					<< endl;
-			cin >> i;
-			//get emp d'id i
-			// analyser empreinte
-			bool badId = true;
-			while (badId) {
-				map<int, EmpreintePatient *>::iterator it =
-						catalogueEmpreintes->find(i);
-				if (it != catalogueEmpreintes->end()) {
-					EmpreintePatient e = *(it->second);
-					e.analyser(*catalogueMaladies);
-					badId = false;
-				} else {
-					cout << "Cet identifiant d'empreinte n'est pas valide."
-							<< endl;
-					cout << "Veuillez saisir un identifiant valide ou -1 pour sortir: " << endl;
-					cin >> i;
-					if(i==-1)badId = false;
-				}
-			}
-
-			//exit ?
-
-			action = 0;
-			break;
-		}
-
-		case 5: {
-			int i;
-			string more;
-			AfficherEmpreintesPatient(catalogueEmpreintes);
-			cout<< "Veuillez saisir l'identifiant (numéro) de l'empreinte à analyser : "<< endl;
-			cin >> i;
-			//get emp d'id i
-			// analyser empreinte
-			bool keepOn = true;
-			while(keepOn){
-				bool badId = true;
-				while (badId) {
-					map<int, EmpreintePatient *>::iterator it =
-							catalogueEmpreintes->find(i);
-					if (it != catalogueEmpreintes->end()) {
-						EmpreintePatient e = *(it->second);
-						e.analyser(*catalogueMaladies);
-						badId = false;
-					} else {
-						cout << "Cet identifiant d'empreinte n'est pas valide."
-								<< endl;
-						cout << "Veuillez saisir un identifiant valide ou -1 pour sortir: " << endl;
-						cin >> i;
-						if(i==-1){
-							badId = false;
-							keepOn = false;
-						}
-					}
-
-				}
-				if(keepOn){
-					cout << "Voulez-vous sélectionner une nouvelle empreinte ? (Y/N)" << endl;
-					cin >> more;
-					if(more=="N") keepOn = false;
-				}
-			}
-
-			//exit ?
-			action = 0;
-			break;
-		}
-
-		case 6: {
-			//stopper l'exécution
-			return;
-			break;
-		}
-		}
+	char action='1';
+	while (action >= '1' && action < '6') {
 		cout << "Veuillez choisir une option: " << endl;
 		cout << "1. Charger des données depuis un fichier " << endl;
 		cout << "2. Afficher la liste des maladies prises en compte " << endl;
@@ -659,6 +548,115 @@ static void Menu()
 		cout << "5. Analyser plusieurs empreintes " << endl;
 		cout << "6. Quitter l’application" << endl;
 		cin >> action;
+		switch (action) {
+
+			case '1': {
+				cout << "Veuillez saisir le nom du fichier de données à charger" << endl;
+				string nom;
+				cin >> nom;
+				ChargerFichier cf;
+				int chargement = cf.charger(nom, *catalogueMaladies, *catalogueSymptomes, *catalogueEmpreintes, *maladies);
+				if (chargement == ERREURDELECTURE){
+					cout << "Erreur dans la lecture du fichier" << endl;
+				}
+				else if (chargement == ENTETENONCONFORME){
+					cout << "Entête non conforme" << endl;
+				}
+				else if (chargement == LECTUREEMPREINTEMALADIE){
+					cout << "Lecture du fichier contenant les empreintes de maladies: Effectuée" << endl;
+				}
+				else if (chargement == LECTUREEMPREINTEPATIENT){
+					cout << "Lecture du fichier contenant les empreintes de patients: Effectuée" << endl;
+				}
+				else{
+					cout << "Lecture effectuée" << endl;
+				}
+				break;
+			}
+
+			case '2': {
+				AfficherMaladies (maladies);
+				break;
+			}
+
+			case '3': {
+				string maladie;
+				AfficherMaladies (maladies);
+				cout<< "Veuillez saisir le nom d'une des maladies présentées dont vous souhaitez connaître les symptomes :" <<endl;
+				cin >> maladie;
+				AfficherSymptomes(maladie, maladies, catalogueSymptomes);
+				break;
+			}
+
+			case '4': {
+				int i;
+				AfficherEmpreintesPatient(catalogueEmpreintes);
+				cout << "Veuillez saisir l'identifiant (numéro) de l'empreinte à analyser : " << endl;
+				cin >> i;
+				//get emp d'id i
+				// analyser empreinte
+				bool badId = true;
+				while (badId) {
+					map<int, EmpreintePatient *>::iterator it = catalogueEmpreintes->find(i);
+					if (it != catalogueEmpreintes->end()) {
+						EmpreintePatient e = *(it->second);
+						e.analyser(*catalogueMaladies);
+						badId = false;
+					} else {
+						cout << "Cet identifiant d'empreinte n'est pas valide." << endl;
+						cout << "Veuillez saisir un identifiant valide ou -1 pour sortir: " << endl;
+						cin >> i;
+						if(i==-1)badId = false;
+					}
+				}
+				break;
+			}
+
+			case '5': {
+				int i;
+				string more;
+				AfficherEmpreintesPatient(catalogueEmpreintes);
+				cout<< "Veuillez saisir l'identifiant (numéro) de l'empreinte à analyser : "<< endl;
+				cin >> i;
+				//get emp d'id i
+				// analyser empreinte
+				bool keepOn = true;
+				while(keepOn){
+					bool badId = true;
+					while (badId) {
+						map<int, EmpreintePatient *>::iterator it = catalogueEmpreintes->find(i);
+						if (it != catalogueEmpreintes->end()) {
+							EmpreintePatient e = *(it->second);
+							e.analyser(*catalogueMaladies);
+							badId = false;
+						} else {
+							cout << "Cet identifiant d'empreinte n'est pas valide." << endl;
+							cout << "Veuillez saisir un identifiant valide ou -1 pour sortir: " << endl;
+							cin >> i;
+							if(i==-1){
+								badId = false;
+								keepOn = false;
+							}
+						}
+
+					}
+					if(keepOn){
+						cout << "Voulez-vous sélectionner une nouvelle empreinte ? (Y/N)" << endl;
+						cin >> more;
+						if(more=="N") keepOn = false;
+					}
+				}
+				break;
+			}
+			case '6': {
+				//stopper l'exécution
+				break;
+			}
+			default: {
+				cout << "Valeur non prise en compte" << endl;
+				action = '1';
+			}
+		}
 	} //----- Fin de Menu
 
 }

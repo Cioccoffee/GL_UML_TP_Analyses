@@ -28,7 +28,7 @@ class ChargerFichier {
 
 public:
 //----------------------------------------------------- Méthodes publiques
-	EmpreinteMaladie* chargerMaladie (stringstream &ss, string** formatDonnees, set<string> &maladies);
+	EmpreinteMaladie* chargerMaladie (stringstream &ss, string** formatDonnees, set<string> &maladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Charger une ligne depuis un fichier contenant des données de maladies
 	//
@@ -61,7 +61,7 @@ public:
 	// Mode d'emploi: Déterminner le type des données
 	//
 	// Contrat:
-    bool charger(string nom, map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, map<int, EmpreintePatient*> &catalogueEmpreintes, set<string> &maladies);
+    int charger(string nom, map<int, EmpreinteMaladie*> &catalogueMaladies, multimap<string, EmpreinteMaladie*> &catalogueSymptomes, map<int, EmpreintePatient*> &catalogueEmpreintes, set<string> &maladies);
     // type Méthode ( liste des paramètres );
 	// Mode d'emploi: Charger un fichier
 	//

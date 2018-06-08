@@ -82,11 +82,13 @@ string IntToString (int i)
 string Empreinte::toString()
 {
 	string s = "Empreinte ";
-	s+= IntToString(id) ;
-	s+=" :\n";
+	s += IntToString(id) ;
+	s += ":\n";
+	s += "\tMesures:\n";
 	map<string,Mesure>::iterator it;
 	for(it = mesures->begin(); it!= mesures->end(); ++it){
-		s+=it->second.toString();
+		string mesure = it->second.toString();
+		s += mesure;
 	}
 	return s; //"Empreinte : "+ *id +" :\n";
 }

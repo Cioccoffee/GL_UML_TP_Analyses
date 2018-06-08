@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <cstdlib>
 //#include <stdlib.h>
 using namespace std;
@@ -90,7 +91,12 @@ bool Mesure::estSimilaire(const Mesure &m) {
 }
 
 string Mesure::toString() {
-	return "Mesure : " + nom + " est un " + type + " de valeur " + valeur + "\n";
+	string s;
+	stringstream ss(s);
+	ss << "\t\tNom: " << nom << '\n';
+	ss << "\t\tType: " << type << '\n';
+	ss << "\t\tValeur: " << valeur << '\n';
+	return ss.str();
 }
 
 string Mesure::Nom() {
